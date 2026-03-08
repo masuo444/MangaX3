@@ -36,9 +36,10 @@
     { "id": "c1", "seriesId": "kuku", "number": 1, "title": "1話", "publishDate": "2025/11/01", "likes": 1200, "status": "published", "thumbUrl": "/assets/kuku-ep1.jpg", "pageCount": 21 },
     { "id": "c2", "seriesId": "kuku", "number": 2, "title": "2話", "publishDate": "2025/11/08", "likes": 980, "status": "published", "thumbUrl": "/assets/kuku-ep2.jpg", "pageCount": 22 },
     { "id": "c3", "seriesId": "kuku", "number": 3, "title": "3話", "publishDate": "2025/11/15", "likes": 720, "status": "published", "thumbUrl": "/assets/kuku-ep3.jpg", "pageCount": 22 },
-    { "id": "c4", "seriesId": "kuku", "number": 4, "title": "", "status": "in_production", "sponsorGoal": 1, "sponsors": 0, "thumbUrl": "/assets/kuku-ep3.jpg", "pageCount": 22 },
-    { "id": "c5", "seriesId": "kuku", "number": 5, "title": "", "status": "in_production", "sponsorGoal": 1, "sponsors": 0, "thumbUrl": "/assets/kuku-ep3.jpg", "pageCount": 22 },
-    { "id": "c6", "seriesId": "kuku", "number": 6, "title": "", "status": "in_production", "sponsorGoal": 1, "sponsors": 0, "thumbUrl": "/assets/kuku-ep3.jpg", "pageCount": 22 },
+    { "id": "c4", "seriesId": "kuku", "number": 4, "title": "4話", "publishDate": "2025/11/22", "likes": 0, "status": "published", "thumbUrl": "/manga/kuku/ch4/1.png", "pageCount": 26 },
+    { "id": "c5", "seriesId": "kuku", "number": 5, "title": "5話", "publishDate": "2025/11/29", "likes": 0, "status": "published", "thumbUrl": "/manga/kuku/ch5/1.jpg", "pageCount": 20 },
+    { "id": "c6", "seriesId": "kuku", "number": 6, "title": "6話", "publishDate": "2025/12/06", "likes": 0, "status": "published", "thumbUrl": "/manga/kuku/ch6/1.jpg", "pageCount": 18 },
+    { "id": "c7", "seriesId": "kuku", "number": 7, "title": "7話", "publishDate": "2025/12/13", "likes": 0, "status": "published", "thumbUrl": "/manga/kuku/ch7/1.jpg", "pageCount": 17 },
     { "id": "f1", "seriesId": "fomus", "number": 1, "title": "1話", "publishDate": "2025/12/10", "likes": 640, "status": "published", "thumbUrl": "/fomus-manga-cover-202501.jpg", "pageCount": 13 }
   ]
 }

@@ -22,12 +22,12 @@ const STYLES = `
   --text-white: #ffffff;
   --text-gray: #b3b3b3;
   
-  --jump-bg: #ffffff;
-  --jump-text: #333333;
-  --jump-gray: #757575;
-  --jump-light-gray: #f5f5f5;
+  --jump-bg: #0a0a0a;
+  --jump-text: #e8e8e8;
+  --jump-gray: #888888;
+  --jump-light-gray: #1a1a1a;
   --jump-accent: #e60012;
-  --jump-border: #eeeeee;
+  --jump-border: rgba(255,255,255,0.08);
 
   --header-height: 68px;
   --safe-area-bottom: env(safe-area-inset-bottom);
@@ -65,9 +65,28 @@ body {
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes revealUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes revealScale { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(229,9,20,0.5); } 50% { box-shadow: 0 0 0 12px rgba(229,9,20,0); } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 .animate-fade-in { animation: fadeIn 0.4s ease-out; }
 .animate-slide-up { animation: slideUp 0.3s ease-out; }
 .animate-spin { animation: spin 1s linear infinite; }
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.cta-pulse { animation: pulse 2s ease-in-out infinite; }
+.shimmer-text {
+  background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #ffd700 75%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
 
 .service-section {
   margin: 3rem 4% 5rem;
@@ -1012,7 +1031,8 @@ body {
 }
 .app-header.scrolled { background-color: rgb(20, 20, 20); }
 .header-left { display: flex; align-items: center; gap: 2rem; }
-.logo { color: var(--primary-red); font-size: 1.8rem; font-weight: 900; text-shadow: 0 0 10px rgba(229,9,20,0.5); cursor: pointer; text-decoration: none; }
+.logo { color: var(--primary-red); font-size: 1.8rem; font-weight: 900; text-shadow: 0 0 10px rgba(229,9,20,0.5); cursor: pointer; text-decoration: none; font-family: 'Inter', sans-serif; letter-spacing: -0.02em; transition: text-shadow 0.3s; }
+.logo:hover { text-shadow: 0 0 20px rgba(229,9,20,0.7), 0 0 40px rgba(229,9,20,0.3); }
 .pc-nav { display: none; gap: 1.2rem; }
 .pc-nav-link { color: #e5e5e5; font-size: 0.9rem; cursor: pointer; transition: color 0.2s; }
 .pc-nav-link:hover, .pc-nav-link.active { color: #fff; font-weight: bold; }
@@ -1050,7 +1070,7 @@ body {
 @media (min-width: 768px) { .hero-poster-area { display: block; } }
 .hero-poster-img { width: 100%; height: 100%; object-fit: cover; }
 
-.hero-title { font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; font-family: Impact, sans-serif; letter-spacing: -1px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+.hero-title { font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; font-family: 'Noto Serif JP', Impact, sans-serif; letter-spacing: -1px; text-shadow: 2px 4px 8px rgba(0,0,0,0.9), 0 0 40px rgba(229,9,20,0.15); }
 @media (min-width: 768px) { .hero-title { font-size: 5rem; margin: 0 0 1rem 0; } }
 .hero-desc { display: none; font-size: 1.1rem; line-height: 1.5; margin-bottom: 2rem; color: #ddd; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 @media (min-width: 768px) { .hero-desc { display: block; } }
@@ -1062,8 +1082,9 @@ body {
 .hero-actions { display: flex; gap: 1rem; justify-content: center; }
 @media (min-width: 768px) { .hero-actions { justify-content: flex-start; } }
 
-.btn { border: none; padding: 0.6rem 1.5rem; border-radius: 4px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; gap: 0.6rem; transition: all 0.2s; }
+.btn { border: none; padding: 0.75rem 1.8rem; border-radius: 6px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; gap: 0.6rem; transition: all 0.25s cubic-bezier(0.22,1,0.36,1); }
 .btn:active { transform: scale(0.95); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
 .btn-white { background: white; color: black; }
 .btn-gray { background: rgba(109, 109, 110, 0.7); color: white; backdrop-filter: blur(4px); }
 
@@ -1075,8 +1096,8 @@ body {
 .carousel { display: flex; overflow-x: auto; gap: 0.5rem; padding-bottom: 2rem; padding-right: 4%; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .carousel::-webkit-scrollbar { display: none; }
 
-.poster-card { position: relative; flex: 0 0 auto; width: 110px; aspect-ratio: 2/3; border-radius: 4px; overflow: hidden; background: var(--bg-card); scroll-snap-align: start; transition: transform 0.3s, z-index 0.3s; cursor: pointer; }
-@media (min-width: 768px) { .poster-card { width: 180px; } .poster-card:hover { transform: scale(1.1); z-index: 10; box-shadow: 0 10px 20px rgba(0,0,0,0.5); } }
+.poster-card { position: relative; flex: 0 0 auto; width: 110px; aspect-ratio: 2/3; border-radius: 6px; overflow: hidden; background: var(--bg-card); scroll-snap-align: start; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), z-index 0.3s, box-shadow 0.35s; cursor: pointer; border: 1px solid transparent; }
+@media (min-width: 768px) { .poster-card { width: 180px; } .poster-card:hover { transform: scale(1.08) translateY(-6px); z-index: 10; box-shadow: 0 16px 40px rgba(0,0,0,0.6); border-color: rgba(229,9,20,0.4); } }
 .poster-image { width: 100%; height: 100%; object-fit: cover; }
 
 .continue-card { flex: 0 0 auto; width: 240px; background: var(--bg-card); border-radius: 4px; overflow: hidden; margin-right: 0.5rem; transition: transform 0.3s; cursor: pointer; }
@@ -1100,30 +1121,38 @@ body {
 .jump-hero { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; }
 @media (min-width: 768px) { .jump-hero { aspect-ratio: 21 / 9; } }
 .jump-hero img { width: 100%; height: 100%; object-fit: cover; }
-.jump-hero-gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); }
-.jump-info { padding: 1.5rem 1rem; }
-.jump-title { font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem; }
+.jump-hero-gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 70%; background: linear-gradient(to top, var(--jump-bg) 0%, rgba(10,10,10,0.7) 40%, transparent 100%); }
+.jump-info { padding: 1.5rem 1.2rem; position: relative; z-index: 2; margin-top: -3rem; }
+.jump-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 0.3rem; letter-spacing: -0.02em; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+.jump-author { color: var(--jump-gray); font-size: 0.85rem; margin-bottom: 1rem; }
 @media (min-width: 768px) { .jump-title { font-size: 2.5rem; } }
-.jump-read-btn { width: 100%; padding: 1rem; border-radius: 30px; border: none; background: var(--jump-accent); color: white; font-weight: bold; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(230, 0, 18, 0.3); margin-bottom: 1.5rem; transition: transform 0.2s; }
-.jump-read-btn:hover { transform: scale(1.02); }
-.jump-tabs { display: flex; border-bottom: 1px solid var(--jump-border); background: var(--jump-bg); position: sticky; top: 0; z-index: 40; }
-.jump-tab { flex: 1; padding: 1rem; text-align: center; font-weight: bold; color: var(--jump-gray); cursor: pointer; background: none; border: none; position: relative; transition: color 0.2s; }
-.jump-tab.active { color: var(--jump-accent); }
-.jump-tab.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--jump-accent); }
-.jump-episode-item { display: flex; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--jump-border); cursor: pointer; align-items: flex-start; position: relative; transition: background 0.2s; }
-.jump-episode-item:hover { background: #f9f9f9; }
-.jump-ep-thumb { width: 120px; aspect-ratio: 16 / 9; background: var(--jump-light-gray); border-radius: 4px; overflow: hidden; flex-shrink: 0; position: relative; }
+.jump-read-btn { width: 100%; padding: 1rem; border-radius: 12px; border: none; background: var(--jump-accent); color: white; font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; box-shadow: 0 4px 20px rgba(230, 0, 18, 0.35), 0 0 0 1px rgba(230, 0, 18, 0.1); margin-bottom: 0.75rem; transition: transform 0.2s, box-shadow 0.2s; }
+.jump-read-btn:hover { transform: scale(1.02); box-shadow: 0 6px 28px rgba(230, 0, 18, 0.5); }
+.jump-tabs { display: flex; border-bottom: 1px solid var(--jump-border); background: var(--jump-bg); position: sticky; top: 0; z-index: 40; margin-top: 0.5rem; }
+.jump-tab { flex: 1; padding: 0.9rem; text-align: center; font-weight: 600; font-size: 0.9rem; color: var(--jump-gray); cursor: pointer; background: none; border: none; position: relative; transition: color 0.2s; letter-spacing: 0.04em; }
+.jump-tab.active { color: #fff; }
+.jump-tab.active::after { content: ''; position: absolute; bottom: 0; left: 20%; right: 20%; height: 2px; background: var(--jump-accent); border-radius: 2px; }
+.jump-episode-item { display: flex; gap: 1rem; padding: 1rem 1.2rem; border-bottom: 1px solid var(--jump-border); cursor: pointer; align-items: center; position: relative; transition: background 0.2s; }
+.jump-episode-item:hover { background: rgba(255,255,255,0.04); }
+.jump-ep-thumb { width: 70px; aspect-ratio: 2/3; background: var(--jump-light-gray); border-radius: 6px; overflow: hidden; flex-shrink: 0; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 .jump-ep-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.jump-ep-title { font-weight: 700; font-size: 0.95rem; color: #fff; }
+.jump-ep-meta { font-size: 0.8rem; color: var(--jump-gray); margin-top: 0.2rem; display: flex; align-items: center; gap: 0.3rem; }
 .production-badge { position: absolute; top: 0.5rem; left: 0.5rem; background: rgba(0,0,0,0.7); color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; }
 
 .reader-container { position: fixed; inset: 0; background: black; z-index: 200; display: flex; flex-direction: column; }
-.reader-header { position: absolute; top: 0; width: 100%; padding: 1rem; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); display: flex; justify-content: space-between; color: white; z-index: 10; transition: transform 0.3s; }
-.reader-header.hidden { transform: translateY(-100%); }
-.reader-content { flex: 1; overflow-x: auto; display: flex; scroll-snap-type: x mandatory; scrollbar-width: none; }
-.reader-page { flex: 0 0 100%; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; scroll-snap-align: center; position: relative; }
-.reader-page img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.reader-footer { position: absolute; bottom: 0; width: 100%; padding: 1rem; padding-bottom: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); transition: transform 0.3s; }
-.reader-footer.hidden { transform: translateY(100%); }
+.reader-header { position: fixed; top: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent); display: flex; justify-content: space-between; color: white; z-index: 210; transition: transform 0.3s, opacity 0.3s; }
+.reader-header.hidden { transform: translateY(-100%); opacity: 0; }
+.reader-content { flex: 1; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; align-items: center; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.reader-content::-webkit-scrollbar { display: none; }
+.reader-page { width: 100%; max-width: 800px; position: relative; flex-shrink: 0; }
+.reader-page img { width: 100%; height: auto; display: block; }
+@media (min-width: 768px) {
+  .reader-page { height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .reader-page img { width: auto; max-width: 100%; height: 100vh; object-fit: contain; }
+}
+.reader-footer { position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem; padding-bottom: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); transition: transform 0.3s, opacity 0.3s; z-index: 210; }
+.reader-footer.hidden { transform: translateY(100%); opacity: 0; }
 
 .admin-container { padding: 2rem; background: #f3f4f6; min-height: 100vh; color: #333; padding-bottom: 6rem;}
 .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1rem; }
@@ -1619,14 +1648,6 @@ body {
 }
 `;
 
-const TRANSLATE_LANGS = [
-  { code: "ja", label: "日本語" },
-  { code: "en", label: "English" },
-  { code: "ko", label: "한국어" },
-  { code: "zh", label: "中文" },
-  { code: "es", label: "Español" },
-];
-
 // ==========================================
 // データ
 // ==========================================
@@ -1785,6 +1806,70 @@ const RESOURCES = {
     studio_add_page: "Extra pages (+5,000 JPY/page)",
     studio_book_option: "Printing option (+1,000 JPY/book~)",
   },
+  fr: {
+    nav_home: "Accueil", nav_new: "Nouveautés", nav_mypage: "Mon Profil", nav_partners: "Sponsors", nav_install: "Télécharger",
+    read_now: "Lire", my_list: "Ma Liste",
+    section_continue: "Continuer la lecture", section_trending: "Tendances", section_new: "Nouveaux épisodes",
+    match: "Correspondance", new_badge: "NOUVEAU",
+    episodes: "Épisodes", details: "Détails", more_like_this: "Dans le même genre",
+    read_first: "Lire depuis le début", favorite: "Favoris", comments: "Commentaires", share: "Partager",
+    production: "En production", sponsor_slots: "Places sponsor", become_sponsor: "Devenir sponsor",
+    support_btn: "Soutenir", sponsor_desc: "Soutenez la production et soyez crédité !", sponsor_price: "50 $ / Place",
+    admin_title: "Studio Créateur", tab_dashboard: "Tableau de bord", tab_works: "Œuvres",
+    close: "Fermer", lang_switch: "日本語", guest_name: "Invité",
+    comp_title_trad: "Production manga traditionnelle", comp_sub_trad: "(Artisanat & Temps)",
+    comp_title_fomus: "FOMUS Story-to-Comic", comp_sub_fomus: "(IA & Innovation Agile)",
+    comp_cost_trad: "300k–500k JPY / 10P", comp_cost_sub_trad: "Coût élevé dû aux processus multiples",
+    comp_time_trad: "1,5–2 mois", comp_time_sub_trad: "Longs cycles de révision",
+    comp_effort_trad: "Important", comp_effort_sub_trad: "Scripts détaillés et direction répétée",
+    comp_skill_trad: "Dépend du talent", comp_skill_sub_trad: "Œuvre unique par des artistes expérimentés",
+    comp_deliver_trad: "Livraison numérique uniquement",
+    comp_cost_fomus: "100k JPY / 10P", comp_cost_sub_fomus: "Flux optimisé par l'IA",
+    comp_time_fomus: "~2 semaines", comp_time_sub_fomus: "Production agile et rapide",
+    comp_effort_fomus: "Minimal (60 min)", comp_effort_sub_fomus: "Nous captons votre intention et proposons la structure",
+    comp_quality_fomus: "Qualité constante", comp_quality_sub_fomus: "Contrôle qualité éditorial",
+    comp_expand_fomus: "Expansion clé en main", comp_expand_sub_fomus: "Multilingue, diffusion mondiale MangaX, impression",
+    badge_fast: "Rapide & Économique", badge_easy: "Conçu pour le client",
+    studio_title: "Story-to-Comic Studio", studio_subtitle: "Transformez votre histoire en manga inoubliable.",
+    studio_intro: "La vitesse de l'IA alliée au savoir-faire éditorial.",
+    studio_basic_plan: "Pack Standard (10P)", studio_basic_price: "100 000 JPY (TTC)",
+    studio_detail_1: "10 pages de manga", studio_detail_2: "Consultation en ligne de 60 min",
+    studio_detail_3: "Art IA + direction éditoriale",
+    studio_add_page: "Pages supplémentaires (+5 000 JPY/page)",
+    studio_book_option: "Option impression (+1 000 JPY/livre~)",
+  },
+  ar: {
+    nav_home: "الرئيسية", nav_new: "جديد", nav_mypage: "صفحتي", nav_partners: "الرعاة", nav_install: "تحميل",
+    read_now: "اقرأ", my_list: "قائمتي",
+    section_continue: "متابعة القراءة", section_trending: "الرائج", section_new: "حلقات جديدة",
+    match: "تطابق", new_badge: "جديد",
+    episodes: "الحلقات", details: "التفاصيل", more_like_this: "مشابه",
+    read_first: "اقرأ من البداية", favorite: "المفضلة", comments: "التعليقات", share: "مشاركة",
+    production: "قيد الإنتاج", sponsor_slots: "مقاعد الرعاية", become_sponsor: "كن راعياً",
+    support_btn: "ادعم", sponsor_desc: "ادعم الإنتاج واحصل على ذكر اسمك!", sponsor_price: "٥٠ $ / مقعد",
+    admin_title: "استوديو المبدع", tab_dashboard: "لوحة التحكم", tab_works: "الأعمال",
+    close: "إغلاق", lang_switch: "日本語", guest_name: "ضيف",
+    comp_title_trad: "إنتاج المانغا التقليدي", comp_sub_trad: "(حرفة ووقت)",
+    comp_title_fomus: "FOMUS Story-to-Comic", comp_sub_fomus: "(ذكاء اصطناعي وابتكار مرن)",
+    comp_cost_trad: "٣٠٠-٥٠٠ ألف ين / ١٠ صفحات", comp_cost_sub_trad: "تكلفة عالية بسبب العمليات المتعددة",
+    comp_time_trad: "١.٥–٢ شهر", comp_time_sub_trad: "دورات مراجعة طويلة",
+    comp_effort_trad: "كبير", comp_effort_sub_trad: "نصوص مفصلة وإخراج متكرر",
+    comp_skill_trad: "يعتمد على المهارة", comp_skill_sub_trad: "عمل فريد من فنانين متمرسين",
+    comp_deliver_trad: "تسليم رقمي فقط",
+    comp_cost_fomus: "١٠٠ ألف ين / ١٠ صفحات", comp_cost_sub_fomus: "سير عمل محسّن بالذكاء الاصطناعي",
+    comp_time_fomus: "~أسبوعان", comp_time_sub_fomus: "إنتاج مرن وسريع",
+    comp_effort_fomus: "الحد الأدنى (٦٠ دقيقة)", comp_effort_sub_fomus: "نلتقط نيتك ونقترح الهيكل",
+    comp_quality_fomus: "جودة ثابتة", comp_quality_sub_fomus: "ضمان جودة تحريري",
+    comp_expand_fomus: "توسع شامل", comp_expand_sub_fomus: "متعدد اللغات، نشر عالمي، طباعة",
+    badge_fast: "سريع واقتصادي", badge_easy: "مصمم للعميل",
+    studio_title: "Story-to-Comic Studio", studio_subtitle: "حوّل قصتك إلى مانغا خالدة.",
+    studio_intro: "سرعة الذكاء الاصطناعي مع الحرفية التحريرية.",
+    studio_basic_plan: "الباقة الأساسية (١٠ صفحات)", studio_basic_price: "١٠٠,٠٠٠ ين (شامل الضريبة)",
+    studio_detail_1: "١٠ صفحات مانغا", studio_detail_2: "استشارة أونلاين ٦٠ دقيقة",
+    studio_detail_3: "رسم بالذكاء الاصطناعي + إخراج تحريري",
+    studio_add_page: "صفحات إضافية (+٥,٠٠٠ ين/صفحة)",
+    studio_book_option: "خيار الطباعة (+١,٠٠٠ ين/نسخة~)",
+  },
 };
 
 const viewToPath = (view) => {
@@ -1798,6 +1883,25 @@ const pathToView = (path) => {
   if (path.startsWith("/download")) return "install";
   if (path.startsWith("/partners")) return "kukuSponsor";
   return "home";
+};
+
+// --- Scroll reveal hook ---
+const useScrollReveal = () => {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+    const elements = document.querySelectorAll(".reveal");
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 };
 
 // --- Hooks & helpers ---
@@ -1881,7 +1985,8 @@ const saveHistory = (seriesId, chapterId, progress) => {
 };
 
 // --- Components ---
-const Header = ({ scrolled, activeTab, setActiveTab, t, toggleLang, lang }) => {
+const Header = ({ scrolled, activeTab, setActiveTab, setLang, lang }) => {
+  const t = RESOURCES[lang];
   const navItems = [
     { key: "home", label: t.nav_home, target: "home" },
     { key: "install", label: t.nav_install, target: "install" },
@@ -1906,7 +2011,20 @@ const Header = ({ scrolled, activeTab, setActiveTab, t, toggleLang, lang }) => {
       </div>
       <div className="header-right">
         <button className="icon-btn"><Search size={24} /></button>
-        <button className="text-xs text-gray-300 hover:text-white transition-colors" onClick={toggleLang}>{lang === "ja" ? "EN" : "JP"}</button>
+        <select
+          value={lang}
+          onChange={(e) => setLang(e.target.value)}
+          style={{
+            background: "transparent", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "6px",
+            color: "#e0e0e0", fontSize: "0.75rem", fontWeight: 600, padding: "4px 6px",
+            cursor: "pointer", outline: "none", letterSpacing: "0.05em",
+          }}
+        >
+          <option value="ja" style={{ background: "#1a1a1a" }}>JP</option>
+          <option value="en" style={{ background: "#1a1a1a" }}>EN</option>
+          <option value="fr" style={{ background: "#1a1a1a" }}>FR</option>
+          <option value="ar" style={{ background: "#1a1a1a" }}>AR</option>
+        </select>
       </div>
     </div>
   );
@@ -2170,40 +2288,94 @@ const PosterCard = ({ series, onClick, t }) => (
 );
 
 const NewEpisodeCard = ({ episode, onClick }) => (
-  <div onClick={() => onClick(episode)} className="continue-card">
-    <div className="continue-image-wrapper">
-      <img src={episode.thumbUrl} className="continue-image" loading="lazy" />
-      <div className="play-overlay"><div className="play-circle"><Play size={20} className="text-white ml-1" /></div></div>
-    </div>
-    <div className="continue-info">
-      <div className="text-sm font-bold text-white truncate w-36">{episode.series?.title} #{episode.number}</div>
-      <Info size={20} />
+  <div onClick={() => onClick(episode)} className="poster-card">
+    <img src={episode.thumbUrl} className="poster-image" loading="lazy" />
+    <div className="absolute bottom-0 w-full" style={{ background: "linear-gradient(transparent, rgba(0,0,0,0.85))", padding: "1.5rem 0.4rem 0.35rem" }}>
+      <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, textShadow: "0 1px 2px black" }}>{episode.series?.title}</div>
+      <div style={{ fontSize: "0.6rem", color: "#ccc" }}>#{episode.number}</div>
     </div>
   </div>
 );
 
 const ServicePitch = ({ onShowFlow }) => {
+  const stats = [
+    { num: "10万円〜", label: "10ページから" },
+    { num: "最短1週間", label: "納品スピード" },
+    { num: "40+", label: "対応言語数" },
+  ];
   return (
-    <section className="service-section">
-      <div style={{ display: "flex", justifyContent: "space-between", gap: "1.5rem", flexWrap: "wrap", alignItems: "center" }}>
-        <div style={{ maxWidth: 820 }}>
-          <div style={{ fontSize: "0.95rem", letterSpacing: "0.08em", color: "#ffb3b3", fontWeight: 700 }}>STORY → COMIC</div>
-          <h2 style={{ fontSize: "2.4rem", margin: "0.3rem 0 0.8rem", fontWeight: 900, lineHeight: 1.15 }}>あなたの物語を漫画にしませんか？</h2>
-          <p style={{ maxWidth: 760, color: "#d7d7d7", lineHeight: 1.6 }}>
-            企画の種から長編まで、AIワークフローとプロの作画チームが商業品質の漫画に仕立てます。
-            1話から連載、短納期案件まで柔軟に対応。制作体制・料金プランもご提案します。
-          </p>
+    <section style={{
+      margin: "4rem 4% 5rem",
+      padding: "0",
+      borderRadius: "20px",
+      background: "linear-gradient(135deg, #0a0a0a 0%, #1a0a1e 40%, #0a1a2e 100%)",
+      border: "1px solid rgba(229,9,20,0.2)",
+      boxShadow: "0 30px 80px rgba(229,9,20,0.12), 0 0 0 1px rgba(255,255,255,0.05)",
+      overflow: "hidden",
+      position: "relative",
+    }}>
+      <div style={{
+        position: "absolute", inset: 0, opacity: 0.4,
+        background: "radial-gradient(circle at 20% 30%, rgba(229,9,20,0.15), transparent 50%), radial-gradient(circle at 80% 70%, rgba(100,200,255,0.1), transparent 50%)",
+      }} />
+      <div style={{ position: "relative", zIndex: 1, padding: "2.5rem 2rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.8rem" }}>
+          <Sparkles size={16} style={{ color: "#ff6b6b" }} />
+          <span style={{ fontSize: "0.85rem", letterSpacing: "0.14em", color: "#ff8a8a", fontWeight: 700, textTransform: "uppercase" }}>Story-to-Comic Studio</span>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", minWidth: 220 }}>
-          <button className="service-cta" onClick={onShowFlow} style={{ justifyContent: "center" }}>
-            <Info size={18} /> 詳しくはこちら
+        <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", margin: "0 0 0.8rem", fontWeight: 900, lineHeight: 1.1, fontFamily: "'Noto Serif JP', serif" }}>
+          あなたの物語を、<br /><span style={{ background: "linear-gradient(90deg, #ff6b6b, #ffd700)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>世界にひとつの漫画に。</span>
+        </h2>
+        <p style={{ maxWidth: 680, color: "#c8c8c8", lineHeight: 1.7, fontSize: "1.05rem", marginBottom: "1.5rem" }}>
+          60分のヒアリングだけで、プロ品質の漫画が完成。<br />
+          人生の物語、ビジネスPR、ギフト ── あなたの想いを形にします。
+        </p>
+
+        <div style={{ display: "flex", gap: "1.2rem", flexWrap: "wrap", marginBottom: "2rem" }}>
+          {stats.map((s) => (
+            <div key={s.label} style={{
+              padding: "0.8rem 1.2rem",
+              borderRadius: "14px",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              minWidth: 120,
+              textAlign: "center",
+            }}>
+              <div style={{ fontSize: "1.4rem", fontWeight: 900, color: "#fff", fontFamily: "'Inter', sans-serif" }}>{s.num}</div>
+              <div style={{ fontSize: "0.8rem", color: "#a8a8a8", marginTop: "0.2rem" }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
+          <button
+            className="cta-pulse"
+            onClick={onShowFlow}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "0.6rem",
+              background: "linear-gradient(135deg, #e50914, #ff4757)",
+              color: "white", border: "none", borderRadius: "999px",
+              padding: "1rem 2rem", fontWeight: 800, fontSize: "1rem",
+              cursor: "pointer", transition: "transform 0.2s",
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.04)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <Rocket size={18} /> 詳しく見る
           </button>
           <button
-            className="service-cta"
             onClick={() => window.open("mailto:contact@example.com?subject=漫画制作相談")}
-            style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.35)", boxShadow: "none" }}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "0.6rem",
+              background: "transparent", color: "#fff",
+              border: "1px solid rgba(255,255,255,0.3)", borderRadius: "999px",
+              padding: "1rem 2rem", fontWeight: 700, fontSize: "1rem",
+              cursor: "pointer", transition: "all 0.2s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
           >
-            <Sparkles size={18} /> 制作相談する
+            <Mail size={18} /> 無料相談する
           </button>
         </div>
       </div>
@@ -2351,6 +2523,7 @@ const StoryFaqItem = ({ item, isOpen, onToggle }) => (
 
 const StoryLanding = ({ onBack }) => {
   const [openFaq, setOpenFaq] = useState(null);
+  useScrollReveal();
 
   const valueItems = [
     { icon: <Rocket size={26} />, title: "プロ品質 × 最短2週間", text: "AI × アジャイル制作で、最短2週間の納品が可能。", tone: "amber", label: "SPEED" },
@@ -2446,22 +2619,50 @@ const StoryLanding = ({ onBack }) => {
           <button className="story-back" onClick={onBack}>
             <ChevronLeft size={16} /> トップへ戻る
           </button>
-          <div className="story-kicker">MangaX × FOMUS</div>
-          <h1 className="story-h1">あなたの物語を、10ページの漫画に。</h1>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 16px", borderRadius: "999px", background: "rgba(198,166,103,0.12)", border: "1px solid rgba(198,166,103,0.3)", marginBottom: "16px" }}>
+            <Sparkles size={14} style={{ color: "#C6A667" }} />
+            <span style={{ fontSize: "13px", fontWeight: 700, color: "#C6A667", letterSpacing: "0.08em" }}>MangaX × FOMUS</span>
+          </div>
+          <h1 className="story-h1" style={{ marginBottom: "24px" }}>
+            あなたの物語を、<br />
+            <span className="shimmer-text">世界にひとつの漫画に。</span>
+          </h1>
           <p className="story-subcopy">
-            世界基準のAI × クリエイティブディレクション。<br />
+            60分話すだけ。構成・作画・編集すべてお任せ。<br />
             人生・ビジネス・ギフト・PRストーリーを、<br />
-            短期間で“作品”として形にします。
+            最短1週間でプロ品質の漫画作品に仕上げます。
           </p>
+
+          <div style={{ display: "flex", justifyContent: "center", gap: "24px", flexWrap: "wrap", marginBottom: "32px" }}>
+            {[
+              { value: "100,000", unit: "円〜", desc: "10P制作" },
+              { value: "1", unit: "週間", desc: "最短納期" },
+              { value: "40+", unit: "言語", desc: "多言語対応" },
+              { value: "60", unit: "分", desc: "ヒアリングのみ" },
+            ].map((item) => (
+              <div key={item.desc} style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "28px", fontWeight: 900, color: "#fff", fontFamily: "'Inter', 'Noto Sans JP', sans-serif", lineHeight: 1 }}>
+                  {item.value}<span style={{ fontSize: "16px", color: "#C6A667" }}>{item.unit}</span>
+                </div>
+                <div style={{ fontSize: "12px", color: "#B8B8B8", marginTop: "4px" }}>{item.desc}</div>
+              </div>
+            ))}
+          </div>
+
           <div className="story-cta-group">
-            <StoryCTAButton variant="primary" onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 予約", "_self")}>
+            <button
+              type="button"
+              className="story-cta primary cta-pulse"
+              onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 予約", "_self")}
+              style={{ fontSize: "17px", padding: "18px 36px" }}
+            >
               無料ヒアリングを予約する
-            </StoryCTAButton>
+            </button>
             <StoryCTAButton variant="secondary" onClick={() => document.getElementById("story-portfolio")?.scrollIntoView({ behavior: "smooth" })}>
               制作事例を見る
             </StoryCTAButton>
           </div>
-          <div className="story-meta">FOMUS Creative Studio</div>
+          <div className="story-meta" style={{ marginTop: "20px" }}>FOMUS Creative Studio</div>
           <div className="story-lang-row">
             {["JP", "EN", "CN", "KR", "40+"].map((lang) => (
               <span key={lang} className="story-lang-pill">{lang}</span>
@@ -2469,7 +2670,7 @@ const StoryLanding = ({ onBack }) => {
           </div>
         </section>
 
-        <section className="story-section">
+        <section className="story-section reveal">
           <h2 className="story-section-title">FOMUS品質の漫画制作を、誰でも。</h2>
           <div className="story-value-grid">
             {valueItems.map((item, idx) => (
@@ -2485,7 +2686,7 @@ const StoryLanding = ({ onBack }) => {
           </div>
         </section>
 
-        <section id="story-portfolio" className="story-section">
+        <section id="story-portfolio" className="story-section reveal">
           <h2 className="story-section-title">こんな物語が、漫画になります。</h2>
           <div className="story-use-grid">
             {useCases.slice(0, 3).map((block) => (
@@ -2527,8 +2728,8 @@ const StoryLanding = ({ onBack }) => {
           </div>
         </section>
 
-        <section className="story-section">
-          <h2 className="story-section-title">あなたがやるのは、“話すだけ”。</h2>
+        <section className="story-section reveal">
+          <h2 className="story-section-title">あなたがやるのは、&ldquo;話すだけ&rdquo;。</h2>
           <div className="story-steps">
             {steps.map((step, idx) => (
               <div key={idx} className="story-step">
@@ -2550,7 +2751,7 @@ const StoryLanding = ({ onBack }) => {
           </div>
         </section>
 
-        <section className="story-section">
+        <section className="story-section reveal">
           <h2 className="story-section-title">従来の常識を覆す、速度と品質。</h2>
           <ComparisonSection
             t={{
@@ -2584,28 +2785,69 @@ const StoryLanding = ({ onBack }) => {
           />
         </section>
 
-        <section className="story-section">
+        <section className="story-section reveal">
           <h2 className="story-section-title">料金プラン</h2>
-          <div className="story-pricing">
-            <div className="story-price-title">Standard Package</div>
-            <div className="story-price-amount">100,000円（税込）</div>
-            <div className="story-bullet">漫画10ページ制作</div>
-            <div className="story-bullet">60分ヒアリング</div>
-            <div className="story-bullet">AI作画・編集</div>
-            <div className="story-bullet">高解像度データ納品（PDF / JPG / PNG）</div>
-            <div className="story-option-list">
-              <div className="story-bullet">追加ページ：1P +5,000円</div>
-              <div className="story-bullet">多言語追加：1言語 +30,000円</div>
-              <div className="story-bullet">製本サービス：1冊1,000円〜</div>
+          <p className="story-section-desc" style={{ marginBottom: "28px" }}>シンプルなワンパッケージ。追加オプションも柔軟に対応します。</p>
+          <div style={{
+            background: "linear-gradient(160deg, #151515, #0f1a2a)",
+            borderRadius: "20px",
+            padding: "0",
+            border: "1px solid rgba(198,166,103,0.3)",
+            overflow: "hidden",
+            boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
+          }}>
+            <div style={{
+              background: "linear-gradient(135deg, rgba(198,166,103,0.12), rgba(198,166,103,0.04))",
+              padding: "28px 32px 20px",
+              borderBottom: "1px solid rgba(198,166,103,0.15)",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+                <Crown size={20} style={{ color: "#C6A667" }} />
+                <span style={{ fontSize: "13px", letterSpacing: "0.1em", color: "#C6A667", fontWeight: 700 }}>STANDARD PACKAGE</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "8px", flexWrap: "wrap" }}>
+                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "48px", color: "#C6A667", fontWeight: 700, lineHeight: 1 }}>100,000</span>
+                <span style={{ fontSize: "18px", color: "#C6A667" }}>円（税込）</span>
+              </div>
+              <div style={{ fontSize: "14px", color: "#B8B8B8", marginTop: "6px" }}>漫画10ページ制作パッケージ</div>
+            </div>
+            <div style={{ padding: "24px 32px 28px" }}>
+              <div style={{ display: "grid", gap: "12px", marginBottom: "24px" }}>
+                {[
+                  { icon: <FileText size={18} />, text: "漫画10ページ制作" },
+                  { icon: <MessageCircle size={18} />, text: "60分オンラインヒアリング" },
+                  { icon: <Wand2 size={18} />, text: "AI作画 + プロ編集ディレクション" },
+                  { icon: <Download size={18} />, text: "高解像度データ納品（PDF / JPG / PNG）" },
+                ].map((item) => (
+                  <div key={item.text} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(198,166,103,0.12)", display: "grid", placeItems: "center", color: "#C6A667", flexShrink: 0 }}>{item.icon}</div>
+                    <span style={{ color: "#e5e5e5", fontSize: "15px" }}>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "16px" }}>
+                <div style={{ fontSize: "13px", color: "#888", marginBottom: "10px", letterSpacing: "0.06em" }}>OPTIONS</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "8px" }}>
+                  {[
+                    "追加ページ：+5,000円/P",
+                    "多言語追加：+30,000円/言語",
+                    "製本サービス：1冊1,000円〜",
+                  ].map((opt) => (
+                    <div key={opt} style={{ fontSize: "14px", color: "#a8a8a8", display: "flex", alignItems: "center", gap: "6px" }}>
+                      <Plus size={12} style={{ color: "#C6A667" }} /> {opt}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="story-section">
+        <section className="story-section reveal">
           <h2 className="story-section-title">FOMUSならではの強み</h2>
           <div className="story-strength-grid">
             {[
-              { icon: <MessageCircle size={22} />, title: "まっすーの“引き出すヒアリング”", text: "話を聞くだけで構成ができる。", tone: "amber" },
+              { icon: <MessageCircle size={22} />, title: "まっすーの\u201C引き出すヒアリング\u201D", text: "話を聞くだけで構成ができる。", tone: "amber" },
               { icon: <Wand2 size={22} />, title: "AI×人のハイブリッド制作", text: "速い・高品質・安定。", tone: "cyan" },
               { icon: <Globe size={22} />, title: "世界展開できる多言語漫画（40言語）", text: "翻訳・SNS・展示会にも対応。", tone: "violet" },
               { icon: <Sparkles size={22} />, title: "MangaXに掲載できる（無料）", text: "個人・ギフト・企業PRとして利用可能。", tone: "pink" },
@@ -2621,7 +2863,7 @@ const StoryLanding = ({ onBack }) => {
           </div>
         </section>
 
-        <section className="story-section">
+        <section className="story-section reveal">
           <h2 className="story-section-title">FAQ</h2>
           <div className="story-faq-list">
             {faqList.map((item, idx) => (
@@ -2635,15 +2877,34 @@ const StoryLanding = ({ onBack }) => {
           </div>
         </section>
 
-        <section className="story-section story-application">
-          <h2 className="story-section-title">あなたの物語を、世界にひとつの漫画へ。</h2>
-          <StoryCTAButton variant="primary" onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 申し込み", "_self")}>
-            Story-to-Comicを申し込む
-          </StoryCTAButton>
-          <div style={{ marginTop: 16 }}>
-            <StoryCTAButton variant="secondary" onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 無料ヒアリング", "_self")}>
-              無料ヒアリングを予約
-            </StoryCTAButton>
+        <section className="story-section story-application" style={{ position: "relative" }}>
+          <div style={{
+            position: "absolute", inset: "-40% 0", opacity: 0.5,
+            background: "radial-gradient(circle at 50% 50%, rgba(198,166,103,0.12), transparent 60%)",
+            pointerEvents: "none",
+          }} />
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <div style={{ fontSize: "14px", letterSpacing: "0.14em", color: "#C6A667", marginBottom: "12px" }}>READY TO START?</div>
+            <h2 className="story-section-title" style={{ fontSize: "clamp(28px, 5vw, 44px)", marginBottom: "16px" }}>
+              あなたの物語を、<br />世界にひとつの漫画へ。
+            </h2>
+            <p style={{ color: "#B8B8B8", fontSize: "16px", maxWidth: "540px", margin: "0 auto 32px", lineHeight: 1.7 }}>
+              まずは60分の無料ヒアリングから。<br />
+              物語のイメージがなくても大丈夫。一緒に形にしていきましょう。
+            </p>
+            <button
+              type="button"
+              className="story-cta primary cta-pulse"
+              onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 申し込み", "_self")}
+              style={{ fontSize: "17px", padding: "18px 40px", marginBottom: "14px" }}
+            >
+              Story-to-Comicを申し込む
+            </button>
+            <div style={{ marginTop: 14 }}>
+              <StoryCTAButton variant="secondary" onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 無料ヒアリング", "_self")}>
+                無料ヒアリングを予約
+              </StoryCTAButton>
+            </div>
           </div>
         </section>
       </div>
@@ -2936,19 +3197,20 @@ const DetailModal = ({ series, chapters, isOpen, onClose, onRead, t }) => {
           {activeTab === "episodes" && (
             <div className="jump-episodes">
               {chapters.map((c) => (
-                <div key={c.id} className="jump-episode-item" onClick={() => { if (c.status === "published") onRead(c); }} style={{ opacity: c.status === "published" ? 1 : 0.8, background: c.status === "published" ? "" : "#fffaf0" }}>
+                <div key={c.id} className="jump-episode-item" onClick={() => { if (c.status === "published") onRead(c); }} style={{ opacity: c.status === "published" ? 1 : 0.5 }}>
                   <div className="jump-ep-thumb">
                     <img src={c.thumbUrl || series.coverUrl} />
                     {c.status !== "published" && <span className="production-badge">{t.production}</span>}
                   </div>
-                  <div className="jump-ep-info">
-                    <div className="jump-ep-title">{c.title}</div>
+                  <div style={{ flex: 1 }}>
+                    <div className="jump-ep-title">{c.title || `${c.number}話`}</div>
                     {c.status === "published" ? (
-                      <div className="jump-ep-meta"><span>{c.publishDate}</span><ThumbsUp size={14} className="ml-2" /> {c.likes}</div>
+                      <div className="jump-ep-meta"><span>{c.publishDate}</span><ThumbsUp size={14} /> {c.likes}</div>
                     ) : (
                       <div className="jump-ep-meta"><span style={{ color: "var(--jump-accent)" }}>{t.sponsor_slots}: {c.sponsors || 0}/{c.sponsorGoal || 5}</span></div>
                     )}
                   </div>
+                  {c.status === "published" && <ChevronLeft size={18} style={{ color: "var(--jump-gray)", transform: "rotate(180deg)", flexShrink: 0 }} />}
                   {c.status !== "published" && <button className="jump-sponsor-btn" onClick={(e) => { e.stopPropagation(); alert("Sponsor flow"); }}><Gift size={14} /> {t.support_btn}</button>}
                 </div>
               ))}
@@ -2960,83 +3222,58 @@ const DetailModal = ({ series, chapters, isOpen, onClose, onRead, t }) => {
   );
 };
 
-const Reader = ({ chapter, series, onClose, translationLang, onChangeTranslationLang, nextChapter, onNextChapter }) => {
+const READER_LANGS = [
+  { code: "off", label: "原文のみ", flag: "" },
+  { code: "en", label: "English", flag: "EN" },
+  { code: "ko", label: "한국어", flag: "KO" },
+  { code: "zh", label: "中文", flag: "ZH" },
+  { code: "es", label: "Español", flag: "ES" },
+];
+
+const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
   const [showUI, setShowUI] = useState(true);
   const [translations, setTranslations] = useState({});
-  const [activePage, setActivePage] = useState(null);
-  const [isTranslating, setIsTranslating] = useState(false);
-  const [translateError, setTranslateError] = useState(null);
-  const [autoTranslate, setAutoTranslate] = useState(true);
-  const [batchTranslating, setBatchTranslating] = useState(false);
-  const [batchProgress, setBatchProgress] = useState(0);
+  const [translationAvailable, setTranslationAvailable] = useState(false);
+  const [selectedLang, setSelectedLang] = useState("off");
   const [currentPage, setCurrentPage] = useState(1);
   const [reachedEnd, setReachedEnd] = useState(false);
   const scrollRaf = React.useRef(null);
   const readerRef = React.useRef(null);
   const [preloaded, setPreloaded] = useState(false);
   const [loadedCount, setLoadedCount] = useState(0);
+  const [showLangPicker, setShowLangPicker] = useState(false);
 
   const pageCount = chapter.pageCount || 20;
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
+  // Reset on chapter change
   useEffect(() => {
     setCurrentPage(1);
     setTranslations({});
-    setTranslateError(null);
-    setActivePage(null);
+    setTranslationAvailable(false);
     setPreloaded(false);
     setLoadedCount(0);
     setReachedEnd(false);
+    setShowLangPicker(false);
+    if (readerRef.current) readerRef.current.scrollTop = 0;
   }, [chapter.id]);
 
-  const handleScroll = () => {
-    const el = readerRef.current;
-    if (!el) return;
-    const { scrollLeft, clientWidth, scrollWidth } = el;
-    // RTLはscrollLeftが負値や末尾起点になるブラウザがあるため補正
-    const isRTL = series.direction !== "ltr";
-    const offset = isRTL ? scrollWidth - clientWidth - scrollLeft : scrollLeft;
-    const page = Math.round(offset / clientWidth) + 1;
-    const clamped = Math.min(pageCount, Math.max(1, page));
-    if (scrollRaf.current) cancelAnimationFrame(scrollRaf.current);
-    scrollRaf.current = requestAnimationFrame(() => setCurrentPage(clamped));
-  };
-
+  // Check if translated images exist (probe first page)
   useEffect(() => {
-    setReachedEnd(currentPage >= pageCount);
-  }, [currentPage, pageCount]);
-
-  const handleTranslateAll = async () => {
-    if (batchTranslating) return;
-    try {
-      setBatchTranslating(true);
-      setBatchProgress(0);
-      setTranslateError(null);
-      for (let idx = 0; idx < pages.length; idx++) {
-        const p = pages[idx];
-        if (!translations[p]) {
-          const translatedText = await performTranslate(p);
-          setTranslations((prev) => ({ ...prev, [p]: translatedText || "翻訳結果がありませんでした。" }));
+    let cancelled = false;
+    const checkTranslation = async () => {
+      try {
+        const res = await fetch(`/manga/${series.id}/ch${chapter.number}/1_en.png`, { method: "HEAD" });
+        if (!cancelled && res.ok) {
+          setTranslationAvailable(true);
         }
-        setBatchProgress(Math.round(((idx + 1) / pages.length) * 100));
-      }
-    } catch (err) {
-      console.error(err);
-      setTranslateError(err.message || "翻訳に失敗しました");
-    } finally {
-      setBatchTranslating(false);
-      setBatchProgress(100);
-    }
-  };
+      } catch {}
+    };
+    checkTranslation();
+    return () => { cancelled = true; };
+  }, [chapter.id, series.id, chapter.number]);
 
-  useEffect(() => {
-    if (!autoTranslate) return;
-    if (!preloaded) return;
-    if (isTranslating) return;
-    if (translations[currentPage]) return;
-    handleTranslate(currentPage);
-  }, [currentPage, autoTranslate, preloaded, translations, isTranslating]);
-
+  // Preload images
   useEffect(() => {
     let cancelled = false;
     const loadImage = (url) =>
@@ -3060,184 +3297,167 @@ const Reader = ({ chapter, series, onClose, translationLang, onChangeTranslation
     };
 
     preload();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [chapter.id, series.id, pageCount]);
 
-  const performTranslate = async (page) => {
-    const imgEl = document.getElementById(`reader-img-${page}`);
-    const imageUrl = imgEl?.currentSrc || `/manga/${series.id}/ch${chapter.number}/${page}.png`;
-
-    const res = await fetch("/api/translate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ imageUrl, targetLang: translationLang }),
-    });
-
-    if (!res.ok) {
-      const text = await res.text();
-      throw new Error(text || "Translation failed");
-    }
-
-    const data = await res.json();
-    return data.translation || data.raw?.translated_text || "";
+  const handleScroll = () => {
+    const el = readerRef.current;
+    if (!el) return;
+    const { scrollTop, scrollHeight, clientHeight } = el;
+    const pageHeight = (scrollHeight - clientHeight) / Math.max(pageCount - 1, 1);
+    const page = Math.round(scrollTop / Math.max(pageHeight, 1)) + 1;
+    const clamped = Math.min(pageCount, Math.max(1, page));
+    if (scrollRaf.current) cancelAnimationFrame(scrollRaf.current);
+    scrollRaf.current = requestAnimationFrame(() => setCurrentPage(clamped));
   };
 
-  const handleTranslate = async (page) => {
-    try {
-      setIsTranslating(true);
-      setActivePage(page);
-      setTranslateError(null);
+  useEffect(() => {
+    setReachedEnd(currentPage >= pageCount);
+  }, [currentPage, pageCount]);
 
-      const translatedText = await performTranslate(page);
-      setTranslations((prev) => ({ ...prev, [page]: translatedText || "翻訳結果がありませんでした。" }));
-    } catch (err) {
-      console.error(err);
-      setTranslateError(err.message || "翻訳に失敗しました");
-    } finally {
-      setIsTranslating(false);
-    }
-  };
+  const availableLangs = READER_LANGS.filter(
+    (l) => l.code === "off" || (translationAvailable && l.code === "en")
+  );
 
   return (
     <div className="reader-container">
-      <div className={`reader-header ${showUI ? "" : "hidden"}`} style={{ justifyContent: "flex-start", gap: "0.75rem" }}>
-        <button onClick={onClose} style={{ background: "none", border: "none", color: "white" }}><ChevronLeft size={24} /></button>
+      {/* Header */}
+      <div className={`reader-header ${showUI ? "" : "hidden"}`} style={{ justifyContent: "space-between", alignItems: "center", gap: "0.75rem" }}>
+        <button onClick={onClose} style={{ background: "none", border: "none", color: "white", display: "flex", alignItems: "center", gap: 4 }}>
+          <ChevronLeft size={24} />
+          <span style={{ fontSize: 14, fontWeight: 600 }}>{series.title}</span>
+        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <span style={{ fontSize: 13, color: "#aaa" }}>{currentPage}/{pageCount}</span>
+        </div>
       </div>
-      <div
-        className="reader-content"
-        onClick={() => setShowUI(!showUI)}
-        onScroll={handleScroll}
-        ref={readerRef}
-        dir={series.direction === "ltr" ? "ltr" : "rtl"}
-      >
-        {pages.map((p) => (
-          <div key={p} className="reader-page" style={{ background: "#111" }}>
-            <div style={{ position: "absolute", top: 12, right: 12, display: "flex", gap: "0.5rem", alignItems: "center", zIndex: 5, background: "rgba(0,0,0,0.55)", padding: "0.35rem 0.6rem", borderRadius: 10 }}>
-              <select
-                value={translationLang}
-                onChange={(e) => onChangeTranslationLang(e.target.value)}
-                style={{ background: "#1f1f1f", color: "#fff", border: "1px solid #333", borderRadius: 8, padding: "0.35rem 0.45rem" }}
-              >
-                {TRANSLATE_LANGS.map((lang) => (
-                  <option key={lang.code} value={lang.code}>{lang.label}</option>
-                ))}
-              </select>
-              <button
-                onClick={(e) => { e.stopPropagation(); setAutoTranslate((v) => !v); }}
-                style={{ background: autoTranslate ? "#198754" : "#2a2a2a", color: "white", border: "none", borderRadius: 8, padding: "0.35rem 0.55rem", cursor: "pointer", fontWeight: 700 }}
-              >
-                {autoTranslate ? "自動ON" : "自動OFF"}
-              </button>
-              <button
-                onClick={(e) => { e.stopPropagation(); handleTranslateAll(); }}
-                disabled={batchTranslating}
-                style={{ display: "flex", alignItems: "center", gap: 6, background: "#0f6fec", color: "white", border: "none", borderRadius: 8, padding: "0.35rem 0.7rem", cursor: "pointer", fontWeight: 700 }}
-              >
-                {batchTranslating ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                全ページ翻訳
-              </button>
-              <button
-                onClick={(e) => { e.stopPropagation(); handleTranslate(p); }}
-                disabled={isTranslating && activePage === p}
-                style={{ display: "flex", alignItems: "center", gap: 6, background: "#e50914", color: "white", border: "none", borderRadius: 8, padding: "0.4rem 0.75rem", cursor: "pointer", fontWeight: 700 }}
-              >
-                {isTranslating && activePage === p ? <Loader2 size={16} className="animate-spin" /> : <Globe size={16} />}
-                翻訳
-              </button>
-            </div>
-            <img
-              id={`reader-img-${p}`}
-              src={`/manga/${series.id}/ch${chapter.number}/${p}.png`}
-              onError={(e) => {
-                if (!e.target.dataset.fallback) {
-                  e.target.dataset.fallback = "jpg";
-                  e.target.src = `/manga/${series.id}/ch${chapter.number}/${p}.jpg`;
-                } else {
-                  e.target.onerror = null;
-                  e.target.src = `https://placehold.co/800x1200/111/333?text=${series.title}+Page+${p}`;
-                }
-              }}
-              alt={`Page ${p}`}
-              loading="lazy"
-            />
-            {translations[p] && (
-              <div style={{ position: "absolute", left: "50%", bottom: 18, transform: "translateX(-50%)", maxWidth: "90%", background: "rgba(0,0,0,0.7)", color: "#fff", padding: "0.75rem 1rem", borderRadius: 12, backdropFilter: "blur(6px)", fontSize: "0.95rem", lineHeight: 1.5 }}>
-                {translations[p]}
-              </div>
-            )}
-            {translateError && activePage === p && (
-              <div style={{ position: "absolute", left: "50%", bottom: 18, transform: "translateX(-50%)", maxWidth: "90%", background: "rgba(229,9,20,0.85)", color: "#fff", padding: "0.65rem 0.9rem", borderRadius: 12, fontSize: "0.9rem" }}>
-                {translateError}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-      {nextChapter && preloaded && reachedEnd && showUI && (
-        <div style={{ position: "fixed", bottom: 16, right: 16, left: 16, zIndex: 121, display: "flex", justifyContent: "flex-end", pointerEvents: "none" }}>
+
+      {/* Language toggle (floating) */}
+      {translationAvailable && showUI && (
+        <div style={{ position: "fixed", top: 60, right: 12, zIndex: 215 }}>
           <button
-            onClick={() => onNextChapter(nextChapter)}
+            onClick={(e) => { e.stopPropagation(); setShowLangPicker(!showLangPicker); }}
             style={{
-              pointerEvents: "auto",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 8,
-              background: "rgba(229,9,20,0.95)",
-              border: "none",
-              borderRadius: 12,
-              color: "#fff",
-              fontWeight: 800,
-              padding: "0.7rem 1rem",
-              cursor: "pointer",
-              boxShadow: "0 10px 24px rgba(0,0,0,0.45)",
+              display: "flex", alignItems: "center", gap: 6,
+              background: selectedLang === "off" ? "rgba(255,255,255,0.12)" : "rgba(229,9,20,0.9)",
+              color: "#fff", border: "none", borderRadius: 10,
+              padding: "8px 12px", cursor: "pointer", fontWeight: 700, fontSize: 13,
+              boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+              backdropFilter: "blur(8px)",
             }}
           >
-            <ChevronRight size={18} /> 次のエピソードへ
+            <Languages size={16} />
+            {selectedLang === "off" ? "翻訳" : availableLangs.find((l) => l.code === selectedLang)?.flag || selectedLang.toUpperCase()}
           </button>
+          {showLangPicker && (
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                position: "absolute", top: "100%", right: 0, marginTop: 6,
+                background: "rgba(20,20,20,0.95)", backdropFilter: "blur(12px)",
+                border: "1px solid rgba(255,255,255,0.15)", borderRadius: 12,
+                padding: "6px 0", minWidth: 160,
+                boxShadow: "0 12px 36px rgba(0,0,0,0.6)",
+              }}
+            >
+              {availableLangs.map((l) => (
+                <button
+                  key={l.code}
+                  onClick={() => { setSelectedLang(l.code); setShowLangPicker(false); }}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 10, width: "100%",
+                    padding: "10px 16px", border: "none",
+                    background: selectedLang === l.code ? "rgba(229,9,20,0.2)" : "transparent",
+                    color: selectedLang === l.code ? "#ff6b6b" : "#e5e5e5",
+                    cursor: "pointer", fontSize: 14, fontWeight: selectedLang === l.code ? 700 : 400,
+                    textAlign: "left",
+                  }}
+                >
+                  {selectedLang === l.code && <Check size={14} />}
+                  <span style={{ marginLeft: selectedLang === l.code ? 0 : 24 }}>{l.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
-      {batchTranslating && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: 16,
-            left: 16,
-            zIndex: 121,
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            background: "rgba(0,0,0,0.75)",
-            color: "#fff",
-            padding: "0.5rem 0.75rem",
-            borderRadius: 10,
-            fontWeight: 700,
-          }}
-        >
-          <Loader2 size={16} className="animate-spin" />
-          全ページ翻訳中... {batchProgress}%
-        </div>
-      )}
+
+      {/* Pages (vertical scroll) */}
+      <div
+        className="reader-content"
+        onClick={() => { setShowUI(!showUI); setShowLangPicker(false); }}
+        onScroll={handleScroll}
+        ref={readerRef}
+      >
+        {pages.map((p) => {
+          const useLangImg = selectedLang !== "off";
+          const basePath = `/manga/${series.id}/ch${chapter.number}`;
+          const imgSrc = useLangImg
+            ? `${basePath}/${p}_${selectedLang}.png`
+            : `${basePath}/${p}.png`;
+          return (
+            <div key={`${p}-${selectedLang}`} className="reader-page" style={{ background: "#000" }}>
+              <img
+                id={`reader-img-${p}`}
+                src={imgSrc}
+                onError={(e) => {
+                  // Fallback chain: _en.png → original .png → .jpg → placeholder
+                  if (useLangImg && !e.target.dataset.fallback) {
+                    e.target.dataset.fallback = "original";
+                    e.target.src = `${basePath}/${p}.png`;
+                  } else if (e.target.dataset.fallback !== "jpg") {
+                    e.target.dataset.fallback = "jpg";
+                    e.target.src = `${basePath}/${p}.jpg`;
+                  } else {
+                    e.target.onerror = null;
+                    e.target.src = `https://placehold.co/800x1200/111/333?text=Page+${p}`;
+                  }
+                }}
+                alt={`Page ${p}`}
+              />
+            </div>
+          );
+        })}
+
+        {/* End of chapter */}
+        {preloaded && (
+          <div style={{
+            width: "100%", padding: "48px 24px 120px", textAlign: "center",
+            background: "#000", color: "#888",
+          }}>
+            <div style={{ fontSize: 14, marginBottom: 16 }}>
+              {chapter.title || `${chapter.number}話`} - END
+            </div>
+            {nextChapter && (
+              <button
+                onClick={() => onNextChapter(nextChapter)}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 8,
+                  background: "rgba(229,9,20,0.95)", border: "none", borderRadius: 12,
+                  color: "#fff", fontWeight: 800, padding: "0.8rem 1.5rem",
+                  cursor: "pointer", boxShadow: "0 10px 24px rgba(0,0,0,0.45)", fontSize: 15,
+                }}
+              >
+                次のエピソードへ <ChevronRight size={18} />
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Loading overlay */}
       {!preloaded && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.85)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#fff",
-            zIndex: 300,
-            gap: "0.8rem",
-          }}
-        >
+        <div style={{
+          position: "fixed", inset: 0, background: "rgba(0,0,0,0.92)",
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          color: "#fff", zIndex: 300, gap: "1rem",
+        }}>
           <Loader2 className="animate-spin" size={32} />
-          <div style={{ fontWeight: 700 }}>ページを事前読み込み中...</div>
-          <div style={{ fontSize: 14, color: "#cfcfcf" }}>{loadedCount} / {pageCount} pages</div>
+          <div style={{ fontWeight: 700, fontSize: 16 }}>読み込み中...</div>
+          <div style={{ width: 200, height: 4, borderRadius: 2, background: "#333", overflow: "hidden" }}>
+            <div style={{ height: "100%", background: "#e50914", borderRadius: 2, width: `${Math.round((loadedCount / pageCount) * 100)}%`, transition: "width 0.3s" }} />
+          </div>
+          <div style={{ fontSize: 13, color: "#888" }}>{loadedCount} / {pageCount} pages</div>
         </div>
       )}
     </div>
@@ -3253,7 +3473,6 @@ const AdminView = ({ onBack, t }) => (
 
 export default function App() {
   const [lang, setLang] = useState("ja");
-  const [translationLang, setTranslationLang] = useState("en");
   const [scrolled, setScrolled] = useState(false);
   const { view, navigate, selectedSeries, openDetail, closeDetail, readingChapter, openReader, closeReader } = useAppNavigation("home");
   const db = useData();
@@ -3269,7 +3488,9 @@ export default function App() {
     openDetail(series);
   };
 
-  const toggleLang = () => setLang((l) => (l === "ja" ? "en" : "ja"));
+  const LANG_ORDER = ["ja", "en", "fr", "ar"];
+  const LANG_LABELS = { ja: "JP", en: "EN", fr: "FR", ar: "AR" };
+  const toggleLang = () => setLang((l) => LANG_ORDER[(LANG_ORDER.indexOf(l) + 1) % LANG_ORDER.length]);
 
   useEffect(() => {
     document.title = selectedSeries ? `MangaX - ${selectedSeries.title}` : "MangaX - The Cross-Border Manga Platform";
@@ -3291,8 +3512,6 @@ export default function App() {
           chapter={readingChapter.chapter}
           series={readingChapter.series}
           onClose={closeReader}
-          translationLang={translationLang}
-          onChangeTranslationLang={setTranslationLang}
           nextChapter={nextChapter}
           onNextChapter={(ch) => openReader(ch, readingChapter.series)}
         />
@@ -3304,14 +3523,13 @@ export default function App() {
   const featuredSeries = db.series[0];
 
   return (
-    <>
+    <div dir={lang === "ar" ? "rtl" : "ltr"}>
       <style>{STYLES}</style>
       <Header
         scrolled={scrolled}
         activeTab={view}
         setActiveTab={navigate}
-        t={t}
-        toggleLang={toggleLang}
+        setLang={setLang}
         lang={lang}
       />
 
@@ -3319,10 +3537,7 @@ export default function App() {
         <div style={{ paddingBottom: "4rem" }}>
           <HeroSection
             series={featuredSeries}
-            onRead={() => {
-              const ch = db.chapters.find((c) => c.seriesId === featuredSeries.id && c.number === 1);
-              if (ch) openReader(ch, featuredSeries);
-            }}
+            onRead={() => openDetail(featuredSeries)}
             onMyList={() => alert("Saved")}
             t={t}
           />
@@ -3381,6 +3596,6 @@ export default function App() {
       />
 
       <BottomNav activeTab={view} setActiveTab={navigate} t={t} />
-    </>
+    </div>
   );
 }
