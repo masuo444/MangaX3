@@ -2299,83 +2299,129 @@ const NewEpisodeCard = ({ episode, onClick }) => (
 
 const ServicePitch = ({ onShowFlow }) => {
   const stats = [
-    { num: "10万円〜", label: "10ページから" },
-    { num: "最短1週間", label: "納品スピード" },
-    { num: "40+", label: "対応言語数" },
+    { num: "¥98,000〜", label: "10ページから", color: "#e8006a" },
+    { num: "2W", label: "最短納期", color: "#00d4ff" },
+    { num: "40+", label: "対応言語", color: "#f5c842" },
+    { num: "1/3", label: "業界比コスト", color: "#e8006a" },
   ];
   return (
     <section style={{
       margin: "4rem 4% 5rem",
       padding: "0",
-      borderRadius: "20px",
-      background: "linear-gradient(135deg, #0a0a0a 0%, #1a0a1e 40%, #0a1a2e 100%)",
-      border: "1px solid rgba(229,9,20,0.2)",
-      boxShadow: "0 30px 80px rgba(229,9,20,0.12), 0 0 0 1px rgba(255,255,255,0.05)",
+      borderRadius: "0",
+      background: "#04040a",
+      border: "1px solid rgba(232,0,106,0.15)",
+      boxShadow: "0 40px 100px rgba(232,0,106,0.08), inset 0 1px 0 rgba(255,255,255,0.04)",
       overflow: "hidden",
       position: "relative",
     }}>
+      {/* Orbs */}
+      <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "rgba(232,0,106,0.18)", filter: "blur(100px)", top: "-20%", right: "-5%", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", width: 300, height: 300, borderRadius: "50%", background: "rgba(0,212,255,0.1)", filter: "blur(90px)", bottom: "-10%", left: "5%", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", width: 200, height: 200, borderRadius: "50%", background: "rgba(245,200,66,0.06)", filter: "blur(80px)", top: "40%", left: "45%", pointerEvents: "none" }} />
+      {/* Dot grid */}
       <div style={{
-        position: "absolute", inset: 0, opacity: 0.4,
-        background: "radial-gradient(circle at 20% 30%, rgba(229,9,20,0.15), transparent 50%), radial-gradient(circle at 80% 70%, rgba(100,200,255,0.1), transparent 50%)",
+        position: "absolute", inset: 0, pointerEvents: "none",
+        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)",
+        backgroundSize: "24px 24px",
       }} />
-      <div style={{ position: "relative", zIndex: 1, padding: "2.5rem 2rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.8rem" }}>
-          <Sparkles size={16} style={{ color: "#ff6b6b" }} />
-          <span style={{ fontSize: "0.85rem", letterSpacing: "0.14em", color: "#ff8a8a", fontWeight: 700, textTransform: "uppercase" }}>Story-to-Comic Studio</span>
+      {/* Content */}
+      <div style={{ position: "relative", zIndex: 2, padding: "clamp(2rem,5vw,3.5rem) clamp(1.5rem,4vw,3rem)" }}>
+        {/* Eyebrow */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "1.2rem" }}>
+          <div style={{ width: 32, height: 1, background: "#e8006a", boxShadow: "0 0 10px #e8006a" }} />
+          <span style={{
+            fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.35em",
+            textTransform: "uppercase", color: "#e8006a", fontWeight: 700,
+          }}>FOMUS Creative Studio — 漫画制作</span>
         </div>
-        <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", margin: "0 0 0.8rem", fontWeight: 900, lineHeight: 1.1, fontFamily: "'Noto Serif JP', serif" }}>
-          あなたの物語を、<br /><span style={{ background: "linear-gradient(90deg, #ff6b6b, #ffd700)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>世界にひとつの漫画に。</span>
+        {/* Title */}
+        <h2 style={{
+          fontSize: "clamp(2rem, 5vw, 3.5rem)", margin: "0 0 1.2rem", fontWeight: 900,
+          lineHeight: 0.95, fontFamily: "'Noto Serif JP', serif", letterSpacing: "-0.02em",
+        }}>
+          <span style={{ display: "block", color: "#f0eef8" }}>あなたの物語を、</span>
+          <span style={{ display: "block", color: "#f0eef8", marginTop: "0.1em" }}>
+            <span style={{
+              WebkitTextStroke: "1.5px #e8006a", color: "transparent",
+              textShadow: "0 0 40px rgba(232,0,106,0.4)",
+            }}>10ページの</span>
+          </span>
+          <span style={{
+            display: "block", color: "#00d4ff", marginTop: "0.1em",
+            textShadow: "0 0 40px rgba(0,212,255,0.35)",
+          }}>漫画に。</span>
         </h2>
-        <p style={{ maxWidth: 680, color: "#c8c8c8", lineHeight: 1.7, fontSize: "1.05rem", marginBottom: "1.5rem" }}>
-          60分のヒアリングだけで、プロ品質の漫画が完成。<br />
-          人生の物語、ビジネスPR、ギフト ── あなたの想いを形にします。
+        {/* Subtitle */}
+        <p style={{
+          maxWidth: 520, color: "rgba(240,238,248,0.5)", lineHeight: 2,
+          fontSize: "0.95rem", marginBottom: "2rem",
+        }}>
+          世界基準のAI × クリエイティブディレクション。<br />
+          採用・PR・個人史・ギフト・海外展開。<br />
+          想いを引き出し、最短2週間で"作品"として形にします。
         </p>
-
-        <div style={{ display: "flex", gap: "1.2rem", flexWrap: "wrap", marginBottom: "2rem" }}>
-          {stats.map((s) => (
+        {/* Stats */}
+        <div style={{ display: "flex", gap: "0", flexWrap: "wrap", marginBottom: "2rem" }}>
+          {stats.map((s, i) => (
             <div key={s.label} style={{
-              padding: "0.8rem 1.2rem",
-              borderRadius: "14px",
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              minWidth: 120,
-              textAlign: "center",
-            }}>
-              <div style={{ fontSize: "1.4rem", fontWeight: 900, color: "#fff", fontFamily: "'Inter', sans-serif" }}>{s.num}</div>
-              <div style={{ fontSize: "0.8rem", color: "#a8a8a8", marginTop: "0.2rem" }}>{s.label}</div>
+              padding: "1rem 1.4rem",
+              background: "rgba(240,238,248,0.03)",
+              border: "1px solid rgba(240,238,248,0.06)",
+              borderLeft: i === 0 ? `3px solid ${s.color}` : `3px solid ${s.color}`,
+              marginRight: "-1px",
+              flex: "0 0 auto",
+              minWidth: "clamp(100px, 22%, 140px)",
+              transition: "background 0.2s, transform 0.2s",
+              cursor: "default",
+            }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(240,238,248,0.06)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(240,238,248,0.03)"; e.currentTarget.style.transform = "translateY(0)"; }}
+            >
+              <div style={{
+                fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)", fontWeight: 900, color: "#f0eef8",
+                fontFamily: "'Bebas Neue', 'Inter', sans-serif", letterSpacing: "0.02em",
+              }}>{s.num}</div>
+              <div style={{
+                fontSize: "0.7rem", color: "rgba(240,238,248,0.4)", marginTop: "0.15rem",
+                fontFamily: "'Space Mono', monospace", letterSpacing: "0.08em",
+              }}>{s.label}</div>
             </div>
           ))}
         </div>
-
-        <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
+        {/* CTAs */}
+        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
           <button
-            className="cta-pulse"
-            onClick={onShowFlow}
+            onClick={() => window.open("https://creative-manga.fomusglobal.com/", "_blank")}
             style={{
               display: "inline-flex", alignItems: "center", gap: "0.6rem",
-              background: "linear-gradient(135deg, #e50914, #ff4757)",
-              color: "white", border: "none", borderRadius: "999px",
-              padding: "1rem 2rem", fontWeight: 800, fontSize: "1rem",
-              cursor: "pointer", transition: "transform 0.2s",
+              fontFamily: "'Space Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              background: "#e8006a", color: "#04040a", border: "none",
+              padding: "1.1rem 2.5rem", fontWeight: 700,
+              cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s",
+              boxShadow: "0 0 40px rgba(232,0,106,0.5), 0 0 80px rgba(232,0,106,0.15)",
+              position: "relative", overflow: "hidden",
             }}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.04)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 8px 60px rgba(232,0,106,0.7), 0 0 120px rgba(232,0,106,0.25)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 0 40px rgba(232,0,106,0.5), 0 0 80px rgba(232,0,106,0.15)"; }}
           >
-            <Rocket size={18} /> 詳しく見る
+            <Rocket size={16} /> 制作プランを見る
           </button>
           <button
-            onClick={() => window.open("mailto:contact@example.com?subject=漫画制作相談")}
+            onClick={() => window.open("https://creative-manga.fomusglobal.com/#process", "_blank")}
             style={{
-              display: "inline-flex", alignItems: "center", gap: "0.6rem",
-              background: "transparent", color: "#fff",
-              border: "1px solid rgba(255,255,255,0.3)", borderRadius: "999px",
-              padding: "1rem 2rem", fontWeight: 700, fontSize: "1rem",
-              cursor: "pointer", transition: "all 0.2s",
+              display: "inline-flex", alignItems: "center", gap: "0.7rem",
+              fontFamily: "'Space Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              background: "transparent", color: "rgba(240,238,248,0.5)",
+              border: "none", padding: "1.1rem 0.5rem",
+              cursor: "pointer", transition: "color 0.2s",
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
+            onMouseEnter={(e) => e.currentTarget.style.color = "#f0eef8"}
+            onMouseLeave={(e) => e.currentTarget.style.color = "rgba(240,238,248,0.5)"}
           >
-            <Mail size={18} /> 無料相談する
+            制作の流れ <span style={{ display: "inline-block", transition: "transform 0.2s" }}>→</span>
           </button>
         </div>
       </div>
@@ -3230,6 +3276,14 @@ const READER_LANGS = [
   { code: "es", label: "Español", flag: "ES" },
 ];
 
+const READER_UI = {
+  off: { translate: "翻訳", nextEp: "次のエピソードへ", end: "END", loading: "読み込み中...", page: "ページ" },
+  en: { translate: "Translate", nextEp: "Next Episode", end: "END", loading: "Loading...", page: "Page" },
+  ko: { translate: "번역", nextEp: "다음 에피소드", end: "끝", loading: "로딩 중...", page: "페이지" },
+  zh: { translate: "翻译", nextEp: "下一话", end: "完", loading: "加载中...", page: "页" },
+  es: { translate: "Traducir", nextEp: "Siguiente episodio", end: "FIN", loading: "Cargando...", page: "Página" },
+};
+
 const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
   const [showUI, setShowUI] = useState(true);
   const [translations, setTranslations] = useState({});
@@ -3347,7 +3401,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
             }}
           >
             <Languages size={16} />
-            {selectedLang === "off" ? "翻訳" : availableLangs.find((l) => l.code === selectedLang)?.flag || selectedLang.toUpperCase()}
+            {selectedLang === "off" ? (READER_UI.off.translate) : availableLangs.find((l) => l.code === selectedLang)?.flag || selectedLang.toUpperCase()}
           </button>
           {showLangPicker && (
             <div
@@ -3426,7 +3480,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
             background: "#000", color: "#888",
           }}>
             <div style={{ fontSize: 14, marginBottom: 16 }}>
-              {chapter.title || `${chapter.number}話`} - END
+              {chapter.title || `${chapter.number}話`} - {(READER_UI[selectedLang] || READER_UI.off).end}
             </div>
             {nextChapter && (
               <button
@@ -3438,7 +3492,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
                   cursor: "pointer", boxShadow: "0 10px 24px rgba(0,0,0,0.45)", fontSize: 15,
                 }}
               >
-                次のエピソードへ <ChevronRight size={18} />
+                {(READER_UI[selectedLang] || READER_UI.off).nextEp} <ChevronRight size={18} />
               </button>
             )}
           </div>
@@ -3453,7 +3507,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
           color: "#fff", zIndex: 300, gap: "1rem",
         }}>
           <Loader2 className="animate-spin" size={32} />
-          <div style={{ fontWeight: 700, fontSize: 16 }}>読み込み中...</div>
+          <div style={{ fontWeight: 700, fontSize: 16 }}>{(READER_UI[selectedLang] || READER_UI.off).loading}</div>
           <div style={{ width: 200, height: 4, borderRadius: 2, background: "#333", overflow: "hidden" }}>
             <div style={{ height: "100%", background: "#e50914", borderRadius: 2, width: `${Math.round((loadedCount / pageCount) * 100)}%`, transition: "width 0.3s" }} />
           </div>
