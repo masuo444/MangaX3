@@ -1100,10 +1100,10 @@ body {
 @media (min-width: 768px) { .poster-card { width: 180px; } .poster-card:hover { transform: scale(1.05) translateY(-4px); z-index: 10; box-shadow: 0 16px 40px rgba(0,0,0,0.6); border-color: rgba(229,9,20,0.4); } }
 .poster-thumb { position: relative; width: 100%; aspect-ratio: 2/3; overflow: hidden; border-radius: 6px 6px 0 0; }
 .poster-image { width: 100%; height: 100%; object-fit: cover; display: block; }
-.poster-info { padding: 6px 6px 8px; }
-.poster-info-title { font-size: 11px; font-weight: 700; color: #fff; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.poster-info-sub { font-size: 10px; color: #999; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-@media (min-width: 768px) { .poster-info-title { font-size: 13px; } .poster-info-sub { font-size: 11px; } }
+.poster-info { padding: 5px 4px 6px; }
+.poster-info-title { font-size: 10px; font-weight: 700; color: #e5e5e5; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all; }
+.poster-info-sub { font-size: 9px; color: #888; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 768px) { .poster-info { padding: 6px 6px 8px; } .poster-info-title { font-size: 13px; } .poster-info-sub { font-size: 11px; } }
 
 .continue-card { flex: 0 0 auto; width: 240px; background: var(--bg-card); border-radius: 4px; overflow: hidden; margin-right: 0.5rem; transition: transform 0.3s; cursor: pointer; }
 @media (min-width: 768px) { .continue-card { width: 300px; } .continue-card:hover { transform: scale(1.05); z-index: 10; } }
@@ -2079,7 +2079,6 @@ const NewEpisodeCard = ({ episode, onClick }) => (
     </div>
     <div className="poster-info">
       <div className="poster-info-title">{episode.series?.title}</div>
-      <div className="poster-info-sub">{episode.publishDate} {episode.likes ? `· ♥ ${episode.likes}` : ""}</div>
     </div>
   </div>
 );
