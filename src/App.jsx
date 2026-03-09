@@ -1161,270 +1161,242 @@ body {
    KUKU Sponsor Page (kx-)
    ========================================== */
 .kx-page {
-  background: radial-gradient(circle at top, rgba(63,191,138,0.12), transparent 60%), #050712;
+  background: #030308;
   color: #e5e7eb;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 .kx-header {
-  position: sticky;
-  top: 0;
-  z-index: 120;
-  backdrop-filter: blur(12px);
-  background: linear-gradient(180deg, rgba(5,7,18,0.78), rgba(5,7,18,0.4));
-  border-bottom: 1px solid rgba(212,175,55,0.18);
+  position: sticky; top: 0; z-index: 120;
+  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(3,3,8,0.7);
+  border-bottom: 1px solid rgba(229,9,20,0.15);
 }
 .kx-header-inner {
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
+  max-width: 1080px; margin: 0 auto; padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
 }
 .kx-header-logo {
-  font-size: 20px;
-  font-weight: 800;
-  color: #d4af37;
-  cursor: pointer;
+  font-size: 22px; font-weight: 900; cursor: pointer;
+  color: #e50914; text-shadow: 0 0 10px rgba(229,9,20,0.5);
 }
-.kx-header-nav { display: flex; gap: 14px; color: #cbd5e1; font-weight: 600; }
-.kx-header-nav a { color: inherit; text-decoration: none; }
+.kx-header-nav { display: flex; gap: 16px; color: #94a3b8; font-weight: 600; font-size: 14px; }
+.kx-header-nav a { color: inherit; text-decoration: none; cursor: pointer; transition: color 0.2s; }
 .kx-header-nav a:hover { color: #fff; }
-.kx-container {
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-.kx-section {
-  padding: 72px 0;
-}
+.kx-container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+.kx-section { padding: 80px 0; position: relative; }
 .kx-section-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 16px;
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800;
+  margin-bottom: 16px; letter-spacing: -0.01em;
 }
-.kx-section-lead {
-  font-size: 1.05rem;
-  opacity: 0.9;
-  margin-bottom: 16px;
-}
-.kx-section-body {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #cbd5e1;
-  margin: 0;
-}
+.kx-section-lead { font-size: 1.05rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.7; }
+.kx-section-body { font-size: 1rem; line-height: 1.8; color: #94a3b8; margin: 0; }
+
+/* Hero */
 .kx-hero {
-  padding: 96px 0 80px;
-  background: radial-gradient(circle at top, rgba(212,175,55,0.22), transparent 60%);
+  padding: 100px 0 88px;
+  position: relative; overflow: hidden;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(229,9,20,0.12), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 20%, rgba(229,9,20,0.06), transparent);
+}
+.kx-hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(229,9,20,0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 .kx-hero-inner {
-  display: grid;
-  gap: 32px;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  align-items: center;
+  display: grid; gap: 40px;
+  grid-template-columns: 1fr 320px; align-items: center;
+  position: relative; z-index: 2;
 }
 .kx-hero-text { flex: 1; }
-.kx-hero-visual {
-  display: flex;
-  justify-content: center;
-}
+.kx-hero-visual { display: flex; justify-content: center; }
 .kx-hero-frame {
-  width: 100%;
-  max-width: 380px;
-  aspect-ratio: 4 / 5;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(212,175,55,0.35);
-  box-shadow: 0 24px 45px rgba(0,0,0,0.55);
-  background: linear-gradient(180deg, rgba(5,7,18,0.6), rgba(5,7,18,0.9));
-  position: relative;
+  width: 100%; max-width: 340px; aspect-ratio: 3/4;
+  border-radius: 20px; overflow: hidden; position: relative;
+  border: 1px solid rgba(229,9,20,0.25);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(229,9,20,0.1);
+  transform: perspective(800px) rotateY(-3deg);
+  transition: transform 0.4s;
 }
-.kx-hero-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.kx-hero-frame:hover { transform: perspective(800px) rotateY(0deg) translateY(-4px); }
+.kx-hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .kx-hero-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.35));
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(3,3,8,0.5));
 }
 .kx-badge {
-  display: inline-block;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(212,175,55,0.6);
-  color: #d4af37;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 999px;
+  background: rgba(229,9,20,0.1); border: 1px solid rgba(229,9,20,0.35);
+  color: #e50914; font-weight: 700;
 }
 .kx-hero-title {
-  font-size: 2.4rem;
-  line-height: 1.3;
-  margin: 12px 0 16px;
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(2rem, 5vw, 3rem); line-height: 1.25;
+  margin: 16px 0 16px; font-weight: 900; letter-spacing: -0.02em;
 }
-.kx-hero-subtitle {
-  font-size: 1.05rem;
-  opacity: 0.9;
-  margin-bottom: 24px;
-}
-.kx-hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
+.kx-hero-subtitle { font-size: 1rem; color: #94a3b8; margin-bottom: 28px; line-height: 1.8; }
+.kx-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .kx-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.18s ease-out;
-  border: 1px solid transparent;
-  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 26px; border-radius: 12px; font-size: 0.95rem; font-weight: 700;
+  text-decoration: none; transition: all 0.2s; border: 1px solid transparent; cursor: pointer;
 }
 .kx-btn-primary {
-  background: #d4af37;
-  color: #020617;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+  background: linear-gradient(135deg, #e50914, #c2070f);
+  color: #fff;
+  box-shadow: 0 12px 32px rgba(229,9,20,0.3), 0 0 0 1px rgba(229,9,20,0.3);
 }
 .kx-btn-primary:hover {
-  background: #e1c357;
-  transform: translateY(-1px);
-  box-shadow: 0 14px 28px rgba(0,0,0,0.45);
+  background: linear-gradient(135deg, #ff2d38, #e50914);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(229,9,20,0.4), 0 0 0 1px rgba(229,9,20,0.5);
 }
 .kx-btn-secondary {
-  background: transparent;
-  color: #d4af37;
-  border-color: rgba(212,175,55,0.7);
+  background: rgba(229,9,20,0.08); color: #ff6b6b;
+  border: 1px solid rgba(229,9,20,0.4);
 }
-.kx-btn-secondary:hover {
-  background: rgba(212,175,55,0.08);
-}
-.kx-btn-full { width: 100%; justify-content: center; }
-.kx-plan-grid {
-  display: grid;
-  gap: 24px;
-  margin-top: 32px;
-}
-@media (min-width: 768px) {
-  .kx-plan-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
+.kx-btn-secondary:hover { background: rgba(229,9,20,0.15); transform: translateY(-1px); }
+.kx-btn-full { width: 100%; }
+
+/* About */
+.kx-about { border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+/* Plan cards */
+.kx-plan-grid { display: grid; gap: 24px; margin-top: 36px; }
+@media (min-width: 768px) { .kx-plan-grid { grid-template-columns: repeat(2, 1fr); } }
 .kx-plan-card {
-  position: relative;
-  background: rgba(15,23,42,0.9);
-  border-radius: 20px;
-  padding: 24px;
-  border: 1px solid rgba(148,163,184,0.35);
-  box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+  position: relative; border-radius: 24px; padding: 32px 28px;
+  background: linear-gradient(160deg, rgba(15,23,42,0.95), rgba(8,12,24,0.95));
+  border: 1px solid rgba(148,163,184,0.2);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
 }
+.kx-plan-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, rgba(148,163,184,0.3), transparent);
+}
+.kx-plan-card:hover { transform: translateY(-4px); box-shadow: 0 28px 60px rgba(0,0,0,0.5); }
 .kx-plan-card-featured {
-  border-color: rgba(212,175,55,0.8);
-  box-shadow: 0 24px 55px rgba(0,0,0,0.6);
+  border-color: rgba(229,9,20,0.4);
+  background: linear-gradient(160deg, rgba(20,8,8,0.95), rgba(8,12,24,0.95));
+}
+.kx-plan-card-featured::before {
+  background: linear-gradient(90deg, #e50914, rgba(229,9,20,0.2));
 }
 .kx-plan-badge {
-  position: absolute;
-  top: 14px;
-  right: 18px;
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(212,175,55,0.16);
-  color: #f9fafb;
+  position: absolute; top: 16px; right: 16px;
+  font-size: 0.72rem; padding: 5px 12px; border-radius: 999px;
+  background: linear-gradient(135deg, #e50914, #c2070f);
+  color: #fff; font-weight: 800; letter-spacing: 0.04em;
 }
-.kx-plan-title { font-size: 1.3rem; margin-bottom: 4px; }
+.kx-plan-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
 .kx-plan-price {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #d4af37;
-  margin-bottom: 4px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700; color: #e50914; margin-bottom: 6px;
 }
-.kx-plan-tagline { font-size: 0.9rem; opacity: 0.85; margin-bottom: 12px; }
-.kx-plan-features {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px;
-  font-size: 0.9rem;
-}
+.kx-plan-tagline { font-size: 0.9rem; color: #94a3b8; margin-bottom: 20px; }
+.kx-plan-features { list-style: none; padding: 0; margin: 0 0 24px; font-size: 0.9rem; }
 .kx-plan-features li {
-  position: relative;
-  padding-left: 18px;
-  margin-bottom: 4px;
+  position: relative; padding-left: 26px; margin-bottom: 8px;
+  line-height: 1.6; color: #cbd5e1;
 }
 .kx-plan-features li::before {
-  content: "•";
-  position: absolute;
-  left: 4px;
-  top: 0;
-  color: #3fbf8a;
+  content: ""; position: absolute; left: 0; top: 6px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: rgba(63,191,138,0.15); border: 1.5px solid #3fbf8a;
 }
-.kx-table-wrapper { overflow-x: auto; }
+.kx-plan-features li::after {
+  content: ""; position: absolute; left: 4px; top: 10px;
+  width: 8px; height: 4px;
+  border-left: 2px solid #3fbf8a; border-bottom: 2px solid #3fbf8a;
+  transform: rotate(-45deg);
+}
+
+/* Comparison table */
+.kx-compare { border-top: 1px solid rgba(255,255,255,0.06); }
+.kx-table-wrapper { overflow-x: auto; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); margin-top: 24px; }
 .kx-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-.kx-table th, .kx-table td {
-  border: 1px solid rgba(55,65,81,0.9);
-  padding: 10px 12px;
-}
-.kx-table th { background: rgba(15,23,42,0.9); }
+.kx-table th, .kx-table td { padding: 14px 16px; border: 1px solid rgba(255,255,255,0.06); }
+.kx-table th { background: rgba(229,9,20,0.06); color: #ff6b6b; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; }
+.kx-table td { background: rgba(15,23,42,0.5); }
+.kx-table tbody tr:hover td { background: rgba(15,23,42,0.8); }
+
+/* Flow steps */
+.kx-flow { border-top: 1px solid rgba(255,255,255,0.06); }
 .kx-flow-steps {
-  list-style: none;
-  padding: 0;
-  margin: 24px 0 0;
-  display: grid;
-  gap: 16px;
+  list-style: none; padding: 0; margin: 32px 0 0;
+  display: grid; gap: 16px; counter-reset: step;
 }
-@media (min-width: 768px) {
-  .kx-flow-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
+@media (min-width: 768px) { .kx-flow-steps { grid-template-columns: repeat(4, 1fr); } }
 .kx-flow-steps li {
-  background: rgba(15,23,42,0.9);
-  border-radius: 14px;
-  padding: 16px 14px;
-  border: 1px solid rgba(75,85,99,0.7);
+  background: linear-gradient(160deg, rgba(15,23,42,0.9), rgba(8,12,24,0.9));
+  border-radius: 16px; padding: 24px 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  position: relative; counter-increment: step;
+  transition: transform 0.2s, border-color 0.2s;
 }
-.kx-spec-grid {
-  display: grid;
-  gap: 16px;
-  margin-top: 16px;
+.kx-flow-steps li:hover { transform: translateY(-3px); border-color: rgba(229,9,20,0.3); }
+.kx-flow-steps li::before {
+  content: counter(step);
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 10px;
+  background: linear-gradient(135deg, #e50914, #ff6b6b);
+  color: #fff; font-weight: 900; font-size: 14px;
+  margin-bottom: 12px;
 }
-@media (min-width: 768px) {
-  .kx-spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kx-flow-steps li h3 { font-size: 1rem; margin: 0 0 6px; font-weight: 700; }
+.kx-flow-steps li p { margin: 0; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; }
+
+/* Spec */
+.kx-spec { border-top: 1px solid rgba(255,255,255,0.06); }
+.kx-spec-grid { display: grid; gap: 20px; margin-top: 24px; }
+@media (min-width: 768px) { .kx-spec-grid { grid-template-columns: repeat(2, 1fr); } }
+.kx-spec-grid > div {
+  background: rgba(15,23,42,0.6); border-radius: 16px; padding: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
 }
-.kx-spec-grid h3 { margin-top: 0; }
-.kx-spec-grid ul { margin: 8px 0 0; padding-left: 18px; line-height: 1.6; color: #cbd5e1; }
-.kx-faq-list { display: grid; gap: 12px; margin-top: 16px; }
+.kx-spec-grid h3 { margin: 0 0 12px; font-size: 1.1rem; color: #ff6b6b; }
+.kx-spec-grid ul { margin: 0; padding-left: 18px; line-height: 1.8; color: #94a3b8; }
+
+/* FAQ */
+.kx-faq { border-top: 1px solid rgba(255,255,255,0.06); }
+.kx-faq-list { display: grid; gap: 12px; margin-top: 24px; }
 .kx-faq-item {
-  background: rgba(15,23,42,0.9);
-  border-radius: 12px;
-  padding: 14px 16px;
-  border: 1px solid rgba(75,85,99,0.6);
+  background: rgba(15,23,42,0.6); border-radius: 14px;
+  padding: 18px 20px; border: 1px solid rgba(255,255,255,0.08);
+  transition: border-color 0.2s;
 }
+.kx-faq-item:hover { border-color: rgba(229,9,20,0.25); }
+.kx-faq-item h3 { font-size: 0.95rem; margin: 0 0 6px; color: #e5e7eb; }
+.kx-faq-item p { margin: 0; font-size: 0.9rem; color: #94a3b8; line-height: 1.6; }
+
+/* CTA final */
 .kx-cta-final {
-  background: radial-gradient(circle at center, rgba(63,191,138,0.18), transparent 60%);
-  border-top: 1px solid rgba(148,163,184,0.35);
+  position: relative; overflow: hidden;
+  background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(229,9,20,0.08), transparent);
+  border-top: 1px solid rgba(229,9,20,0.15);
 }
 .kx-cta-final-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  display: flex; flex-direction: column; gap: 24px; text-align: center;
+  align-items: center;
 }
 @media (min-width: 768px) {
-  .kx-cta-final-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+  .kx-cta-final-inner { flex-direction: row; text-align: left; justify-content: space-between; align-items: center; }
 }
 @media (max-width: 767px) {
-  .kx-section { padding: 56px 0; }
-  .kx-hero { padding: 72px 0 56px; text-align: center; }
-  .kx-hero-inner { grid-template-columns: 1fr; gap: 24px; }
+  .kx-section { padding: 60px 0; }
+  .kx-hero { padding: 80px 0 60px; text-align: center; }
+  .kx-hero-inner { grid-template-columns: 1fr; gap: 28px; }
   .kx-hero-actions { justify-content: center; }
-  .kx-hero-title { font-size: 2rem; }
-  .kx-section-title { font-size: 1.5rem; }
-  .kx-plan-card { padding: 20px; }
+  .kx-hero-title { font-size: 1.8rem; }
+  .kx-hero-frame { transform: none; max-width: 280px; }
+  .kx-section-title { font-size: 1.4rem; }
+  .kx-plan-card { padding: 24px 20px; }
 }
 
 /* ==========================================
@@ -1516,6 +1488,12 @@ const DEFAULT_DB = {
       id: "kuku",
       title: "KUKU ―黎明の木神―",
       heroTitle: ["KUKU ―", "黎明の木神 ―"],
+      heroTitle_en: ["KUKU ―", "Tree God of Dawn ―"],
+      heroTitle_fr: ["KUKU ―", "Dieu-Arbre de l'Aube ―"],
+      heroTitle_ar: ["KUKU ―", "― إله شجرة الفجر"],
+      description_en: "A grand fantasy where gods, humans, and forests intertwine.",
+      description_fr: "Un grand fantasy où dieux, humains et forêts s'entrelacent.",
+      description_ar: "فانتازيا كبرى حيث تتشابك الآلهة والبشر والغابات.",
       author: "Author Name",
       coverUrl: "/assets/kuku-cover.jpg",
       heroUrl: "/assets/kuku-hero.jpg",
@@ -1535,6 +1513,9 @@ const DEFAULT_DB = {
       coverUrl: "/fomus-manga-cover-202501.jpg",
       heroUrl: "/fomus-manga-cover-202501.jpg",
       description: "伝統×テクノロジーで拓く未来。",
+      description_en: "Tradition × Technology: forging the future.",
+      description_fr: "Tradition × Technologie : forger l'avenir.",
+      description_ar: "التقاليد × التكنولوجيا: صياغة المستقبل.",
       totalLikes: 8200,
       isNew: true,
       status: "published",
@@ -1568,6 +1549,11 @@ const RESOURCES = {
     support_btn: "支援する", sponsor_desc: "制作を支援して巻末に名前を掲載しよう！", sponsor_price: "一口 5,000円",
     admin_title: "クリエイター管理", tab_dashboard: "ダッシュボード", tab_works: "作品一覧",
     close: "閉じる", lang_switch: "English", guest_name: "ゲスト", bookshelf_empty: "本棚にはまだ作品がありません。\n作品詳細ページからブックマークを追加しましょう。", bookshelf_add: "本棚に追加", bookshelf_added: "本棚に追加済み",
+    sp_eyebrow: "FOMUS Creative Studio — 漫画制作",
+    sp_title_1: "あなたの物語を、", sp_title_2: "10ページの", sp_title_3: "漫画に。",
+    sp_sub_1: "世界基準のAI × クリエイティブディレクション。", sp_sub_2: "採用・PR・個人史・ギフト・海外展開。", sp_sub_3: "想いを引き出し、最短2週間で\"作品\"として形にします。",
+    sp_stat1: "10ページから", sp_stat2: "最短納期", sp_stat3: "配信作品", sp_stat4: "業界比コスト",
+    sp_cta1: "制作プランを見る", sp_cta2: "制作の流れ",
 
     // Studio LP: サービス比較 (Comparison)
     comp_title_trad: "伝統的な漫画制作",
@@ -1623,6 +1609,11 @@ const RESOURCES = {
     support_btn: "Support", sponsor_desc: "Support production and get credited!", sponsor_price: "$50 / Slot",
     admin_title: "Creator Studio", tab_dashboard: "Dashboard", tab_works: "Works",
     close: "Close", lang_switch: "日本語", guest_name: "Guest", bookshelf_empty: "Your bookshelf is empty.\nAdd series from the detail page.", bookshelf_add: "Add to Shelf", bookshelf_added: "On Shelf",
+    sp_eyebrow: "FOMUS Creative Studio — Manga Production",
+    sp_title_1: "Turn your story into", sp_title_2: "a 10-page", sp_title_3: "manga.",
+    sp_sub_1: "World-class AI × Creative Direction.", sp_sub_2: "Recruitment, PR, memoirs, gifts, global expansion.", sp_sub_3: "We draw out your vision and shape it into a work in as little as 2 weeks.",
+    sp_stat1: "From 10 pages", sp_stat2: "Fastest delivery", sp_stat3: "Published works", sp_stat4: "Industry cost ratio",
+    sp_cta1: "View Plans", sp_cta2: "Production Flow",
 
     // Studio LP: Comparison
     comp_title_trad: "Traditional Manga Production",
@@ -1676,6 +1667,11 @@ const RESOURCES = {
     support_btn: "Soutenir", sponsor_desc: "Soutenez la production et soyez crédité !", sponsor_price: "50 $ / Place",
     admin_title: "Studio Créateur", tab_dashboard: "Tableau de bord", tab_works: "Œuvres",
     close: "Fermer", lang_switch: "日本語", guest_name: "Invité", bookshelf_empty: "Votre bibliothèque est vide.\nAjoutez des séries depuis la page de détails.", bookshelf_add: "Ajouter", bookshelf_added: "Ajouté",
+    sp_eyebrow: "FOMUS Creative Studio — Production Manga",
+    sp_title_1: "Transformez votre histoire en", sp_title_2: "un manga de 10 pages", sp_title_3: ".",
+    sp_sub_1: "IA × Direction créative de niveau mondial.", sp_sub_2: "Recrutement, RP, mémoires, cadeaux, expansion mondiale.", sp_sub_3: "Nous révélons votre vision et la concrétisons en 2 semaines.",
+    sp_stat1: "À partir de 10 pages", sp_stat2: "Livraison rapide", sp_stat3: "Œuvres publiées", sp_stat4: "Ratio coût industrie",
+    sp_cta1: "Voir les plans", sp_cta2: "Processus de production",
     comp_title_trad: "Production manga traditionnelle", comp_sub_trad: "(Artisanat & Temps)",
     comp_title_fomus: "FOMUS Story-to-Comic", comp_sub_fomus: "(IA & Innovation Agile)",
     comp_cost_trad: "300k–500k JPY / 10P", comp_cost_sub_trad: "Coût élevé dû aux processus multiples",
@@ -1708,6 +1704,11 @@ const RESOURCES = {
     support_btn: "ادعم", sponsor_desc: "ادعم الإنتاج واحصل على ذكر اسمك!", sponsor_price: "٥٠ $ / مقعد",
     admin_title: "استوديو المبدع", tab_dashboard: "لوحة التحكم", tab_works: "الأعمال",
     close: "إغلاق", lang_switch: "日本語", guest_name: "ضيف", bookshelf_empty: "مكتبتك فارغة.\nأضف مسلسلات من صفحة التفاصيل.", bookshelf_add: "أضف للمكتبة", bookshelf_added: "في المكتبة",
+    sp_eyebrow: "FOMUS Creative Studio — إنتاج المانغا",
+    sp_title_1: "حوّل قصتك إلى", sp_title_2: "مانغا من 10 صفحات", sp_title_3: ".",
+    sp_sub_1: "ذكاء اصطناعي × إخراج إبداعي عالمي.", sp_sub_2: "التوظيف، العلاقات العامة، السير الذاتية، الهدايا، التوسع العالمي.", sp_sub_3: "نستخلص رؤيتك ونحولها إلى عمل فني في أسبوعين.",
+    sp_stat1: "من 10 صفحات", sp_stat2: "أسرع تسليم", sp_stat3: "أعمال منشورة", sp_stat4: "نسبة تكلفة الصناعة",
+    sp_cta1: "عرض الخطط", sp_cta2: "مراحل الإنتاج",
     comp_title_trad: "إنتاج المانغا التقليدي", comp_sub_trad: "(حرفة ووقت)",
     comp_title_fomus: "FOMUS Story-to-Comic", comp_sub_fomus: "(ذكاء اصطناعي وابتكار مرن)",
     comp_cost_trad: "٣٠٠-٥٠٠ ألف ين / ١٠ صفحات", comp_cost_sub_trad: "تكلفة عالية بسبب العمليات المتعددة",
@@ -2006,9 +2007,10 @@ const RankingPage = ({ db, t, onOpenReader }) => {
   );
 };
 
-const HeroSection = ({ series, onRead, onMyList, t }) => {
+const HeroSection = ({ series, onRead, onMyList, t, lang }) => {
   if (!series) return null;
-  const heroTitleContent = series.heroTitle || (series.id === "kuku" ? ["KUKU ―", "黎明の木神 ―"] : series.title);
+  const heroTitleContent = (lang !== "ja" && series[`heroTitle_${lang}`]) || series.heroTitle || (series.id === "kuku" ? ["KUKU ―", "黎明の木神 ―"] : series.title);
+  const desc = (lang !== "ja" && series[`description_${lang}`]) || series.description;
   return (
     <div className="hero">
       <div className="hero-bg"><img src={series.heroUrl || series.coverUrl} alt="Hero" /></div>
@@ -2025,7 +2027,7 @@ const HeroSection = ({ series, onRead, onMyList, t }) => {
                 ))
               : heroTitleContent.toUpperCase()}
           </h1>
-          <p className="hero-desc">{series.description}</p>
+          <p className="hero-desc">{desc}</p>
           <div className="hero-meta">
             <span style={{ color: "#46d369" }}>{series.match}% Match</span>
             <span className="border border-gray-500 px-1 rounded text-xs">HD</span>
@@ -2067,12 +2069,12 @@ const NewEpisodeCard = ({ episode, onClick }) => (
   </div>
 );
 
-const ServicePitch = ({ onShowFlow }) => {
+const ServicePitch = ({ onShowFlow, t }) => {
   const stats = [
-    { num: "¥98,000〜", label: "10ページから", color: "#e8006a" },
-    { num: "2W", label: "最短納期", color: "#00d4ff" },
-    { num: "40+", label: "対応言語", color: "#f5c842" },
-    { num: "1/3", label: "業界比コスト", color: "#e8006a" },
+    { num: "¥98,000〜", label: t.sp_stat1, color: "#e8006a" },
+    { num: "2W", label: t.sp_stat2, color: "#00d4ff" },
+    { num: "3+", label: t.sp_stat3, color: "#f5c842" },
+    { num: "1/3", label: t.sp_stat4, color: "#e8006a" },
   ];
   return (
     <section style={{
@@ -2103,33 +2105,33 @@ const ServicePitch = ({ onShowFlow }) => {
           <span style={{
             fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.35em",
             textTransform: "uppercase", color: "#e8006a", fontWeight: 700,
-          }}>FOMUS Creative Studio — 漫画制作</span>
+          }}>{t.sp_eyebrow}</span>
         </div>
         {/* Title */}
         <h2 style={{
           fontSize: "clamp(2rem, 5vw, 3.5rem)", margin: "0 0 1.2rem", fontWeight: 900,
           lineHeight: 0.95, fontFamily: "'Noto Serif JP', serif", letterSpacing: "-0.02em",
         }}>
-          <span style={{ display: "block", color: "#f0eef8" }}>あなたの物語を、</span>
+          <span style={{ display: "block", color: "#f0eef8" }}>{t.sp_title_1}</span>
           <span style={{ display: "block", color: "#f0eef8", marginTop: "0.1em" }}>
             <span style={{
               WebkitTextStroke: "1.5px #e8006a", color: "transparent",
               textShadow: "0 0 40px rgba(232,0,106,0.4)",
-            }}>10ページの</span>
+            }}>{t.sp_title_2}</span>
           </span>
           <span style={{
             display: "block", color: "#00d4ff", marginTop: "0.1em",
             textShadow: "0 0 40px rgba(0,212,255,0.35)",
-          }}>漫画に。</span>
+          }}>{t.sp_title_3}</span>
         </h2>
         {/* Subtitle */}
         <p style={{
           maxWidth: 520, color: "rgba(240,238,248,0.5)", lineHeight: 2,
           fontSize: "0.95rem", marginBottom: "2rem",
         }}>
-          世界基準のAI × クリエイティブディレクション。<br />
-          採用・PR・個人史・ギフト・海外展開。<br />
-          想いを引き出し、最短2週間で"作品"として形にします。
+          {t.sp_sub_1}<br />
+          {t.sp_sub_2}<br />
+          {t.sp_sub_3}
         </p>
         {/* Stats */}
         <div style={{ display: "flex", gap: "0", flexWrap: "wrap", marginBottom: "2rem" }}>
@@ -2176,7 +2178,7 @@ const ServicePitch = ({ onShowFlow }) => {
             onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 8px 60px rgba(232,0,106,0.7), 0 0 120px rgba(232,0,106,0.25)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 0 40px rgba(232,0,106,0.5), 0 0 80px rgba(232,0,106,0.15)"; }}
           >
-            <Rocket size={16} /> 制作プランを見る
+            <Rocket size={16} /> {t.sp_cta1}
           </button>
           <button
             onClick={() => window.open("https://creative-manga.fomusglobal.com/#process", "_blank")}
@@ -2191,7 +2193,7 @@ const ServicePitch = ({ onShowFlow }) => {
             onMouseEnter={(e) => e.currentTarget.style.color = "#f0eef8"}
             onMouseLeave={(e) => e.currentTarget.style.color = "rgba(240,238,248,0.5)"}
           >
-            制作の流れ <span style={{ display: "inline-block", transition: "transform 0.2s" }}>→</span>
+            {t.sp_cta2} <span style={{ display: "inline-block", transition: "transform 0.2s" }}>→</span>
           </button>
         </div>
       </div>
@@ -2895,6 +2897,22 @@ const KukuSponsorPage = ({ onBack }) => {
   const FULL_LINK = "STRIPE_LINK_FULL";
   const heroVisual = "/assets/kuku-hero.jpg";
 
+  const stats = [
+    { value: "40+", label: "全話数", icon: <FileText size={18} /> },
+    { value: "3", label: "公開シリーズ", icon: <Globe size={18} /> },
+    { value: "12K+", label: "総いいね", icon: <Heart size={18} /> },
+    { value: "7", label: "公開済み", icon: <BookOpen size={18} /> },
+  ];
+
+  const faqItems = [
+    { q: "個人でもスポンサーになれますか？", a: "はい、個人・法人いずれも可能です。ニックネームでの掲載も対応しています。" },
+    { q: "ロゴと文字表記のどちらでも掲載できますか？", a: "ロゴ・日本語・英語のいずれも対応しています。PNG（透過）またはSVG推奨です。" },
+    { q: "複数話をまとめてスポンサーできますか？", a: "はい。1話スポンサーの複数申し込みも可能です。お得な全巻プランもご検討ください。" },
+    { q: "掲載はいつ反映されますか？", a: "ロゴ・表記の確認後、次回公開エピソードから掲載されます。" },
+  ];
+
+  const [openFaq, setOpenFaq] = useState(null);
+
   return (
     <div className="kx-page">
       <header className="kx-header">
@@ -2902,26 +2920,30 @@ const KukuSponsorPage = ({ onBack }) => {
           <div className="kx-header-logo" onClick={onBack}>MangaX</div>
           <nav className="kx-header-nav">
             <a onClick={onBack}>ホーム</a>
-            <a>スポンサー</a>
+            <a href="#plans">プラン</a>
+            <a href="#flow">流れ</a>
+            <a href="#faq">FAQ</a>
           </nav>
         </div>
       </header>
-      <main className="kx-main">
+      <main>
+        {/* Hero */}
         <section id="hero" className="kx-hero">
           <div className="kx-container kx-hero-inner">
             <div className="kx-hero-text">
-              <p className="kx-badge">Official Sponsor Program</p>
+              <p className="kx-badge"><Crown size={12} /> Official Sponsor Program</p>
               <h1 className="kx-hero-title">
-                KUKU ― 一黎明の木神 ―<br />
-                公式スポンサー募集
+                KUKU ― 黎明の木神 ―<br />
+                <span style={{ color: "#e50914" }}>公式スポンサー募集</span>
               </h1>
               <p className="kx-hero-subtitle">
                 世界規模で展開する長編ファンタジー作品を、<br />
-                あなたの力で未来へつなげてください。
+                あなたの力で未来へつなげてください。<br />
+                物語の一部として、あなたの名を世界に刻みませんか。
               </p>
               <div className="kx-hero-actions">
-                <a href="#plans" className="kx-btn kx-btn-primary">1話スポンサーになる（USD 200）</a>
-                <a href="#plans" className="kx-btn kx-btn-secondary">全巻スポンサーについて詳しく見る</a>
+                <a href="#plans" className="kx-btn kx-btn-primary"><Sparkles size={16} /> スポンサーになる</a>
+                <a href="#about" className="kx-btn kx-btn-secondary">作品について</a>
               </div>
             </div>
             <div className="kx-hero-visual">
@@ -2930,120 +2952,167 @@ const KukuSponsorPage = ({ onBack }) => {
               </div>
             </div>
           </div>
-        </section>
-
-        <section id="about" className="kx-section kx-about">
-          <div className="kx-container">
-            <h2 className="kx-section-title">KUKU｜一黎明の木神 とは</h2>
-            <p className="kx-section-lead">
-              『KUKU｜一黎明の木神』は、FOMUSが世界に向けて制作する長編ファンタジーシリーズです。
-            </p>
-            <p className="kx-section-body">
-              神々、人間、森、文明が交錯する壮麗な物語は、国際アニメーション展開を視野に制作されています。
-              40〜45話規模の物語を支える公式スポンサーを募集しています。
-            </p>
+          {/* Stats bar */}
+          <div className="kx-container" style={{ marginTop: "48px" }}>
+            <div style={{
+              display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
+              background: "rgba(255,255,255,0.03)", borderRadius: "16px",
+              border: "1px solid rgba(255,255,255,0.08)", overflow: "hidden",
+            }}>
+              {stats.map((s, i) => (
+                <div key={s.label} style={{
+                  padding: "20px 16px", textAlign: "center",
+                  borderRight: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", color: "#e50914", marginBottom: "4px" }}>
+                    {s.icon}
+                    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(20px, 3vw, 28px)", fontWeight: 700 }}>{s.value}</span>
+                  </div>
+                  <div style={{ fontSize: "11px", color: "#64748b", letterSpacing: "0.08em", fontWeight: 600 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section id="plans" className="kx-section kx-plans">
+        {/* About */}
+        <section id="about" className="kx-section kx-about">
           <div className="kx-container">
-            <h2 className="kx-section-title">スポンサープラン</h2>
-            <p className="kx-section-lead">
-              1話ごとに参加するプランから、全巻を通して伴走いただくプランまでご用意しています。
-            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "24px", maxWidth: "720px" }}>
+              <div>
+                <div style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#e50914", fontWeight: 700, marginBottom: "12px" }}>ABOUT THE SERIES</div>
+                <h2 className="kx-section-title">KUKU｜黎明の木神 とは</h2>
+                <p className="kx-section-lead">
+                  FOMUSが世界に向けて制作する長編ファンタジー。
+                </p>
+                <p className="kx-section-body">
+                  神々、人間、森、文明が交錯する壮麗な物語。国際アニメーション展開を視野に入れた40〜45話規模のシリーズを、
+                  MangaXプラットフォームで多言語対応し世界配信しています。
+                </p>
+              </div>
+              <div style={{
+                display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", marginTop: "8px",
+              }}>
+                {[
+                  { label: "ジャンル", value: "ファンタジー" },
+                  { label: "全話数", value: "40〜45話" },
+                  { label: "配信", value: "MangaX（多言語）" },
+                  { label: "制作", value: "FOMUS Global" },
+                ].map((item) => (
+                  <div key={item.label} style={{
+                    padding: "14px 16px", borderRadius: "12px",
+                    background: "rgba(229,9,20,0.04)", border: "1px solid rgba(229,9,20,0.12)",
+                  }}>
+                    <div style={{ fontSize: "11px", color: "#64748b", letterSpacing: "0.06em", marginBottom: "4px" }}>{item.label}</div>
+                    <div style={{ fontSize: "14px", fontWeight: 700, color: "#e5e7eb" }}>{item.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Plans */}
+        <section id="plans" className="kx-section kx-plans" style={{ background: "radial-gradient(ellipse 60% 40% at 50% 30%, rgba(229,9,20,0.05), transparent)" }}>
+          <div className="kx-container">
+            <div style={{ textAlign: "center", marginBottom: "8px" }}>
+              <div style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#e50914", fontWeight: 700, marginBottom: "12px" }}>SPONSOR PLANS</div>
+              <h2 className="kx-section-title">スポンサープラン</h2>
+              <p className="kx-section-lead" style={{ maxWidth: "540px", margin: "0 auto" }}>
+                1話ごとに参加するプランから、全巻を通して伴走いただくプランまで。
+              </p>
+            </div>
             <div className="kx-plan-grid">
               <article className="kx-plan-card">
                 <h3 className="kx-plan-title">1話スポンサー</h3>
-                <p className="kx-plan-price">USD 200 / 話</p>
+                <p className="kx-plan-price">USD 200<span style={{ fontSize: "0.9rem", fontFamily: "inherit", color: "#94a3b8" }}> / 話</span></p>
                 <p className="kx-plan-tagline">任意のエピソードを1話単位で支援</p>
                 <ul className="kx-plan-features">
-                  <li>該当話の巻頭＋巻末にスポンサー名掲載（ロゴ / 日本語 / 英語）</li>
+                  <li>該当話の巻頭＋巻末にスポンサー名掲載</li>
+                  <li>ロゴ / 日本語 / 英語から選択可能</li>
                   <li>MangaX公式「スポンサー一覧」に掲載</li>
                   <li>複数話の同時申し込みも可能</li>
-                  <li>話数選択は決済後にご案内します</li>
                 </ul>
                 <a href={EPISODE_LINK} className="kx-btn kx-btn-primary kx-btn-full">
-                  1話スポンサーになる（USD 200）
+                  <Gift size={16} /> 1話スポンサーになる
                 </a>
               </article>
 
               <article className="kx-plan-card kx-plan-card-featured">
-                <div className="kx-plan-badge">おすすめ</div>
+                <div className="kx-plan-badge">BEST VALUE</div>
                 <h3 className="kx-plan-title">全巻スポンサー</h3>
                 <p className="kx-plan-price">USD 7,000</p>
                 <p className="kx-plan-tagline">全40〜45話を一括支援する最上位プラン</p>
                 <ul className="kx-plan-features">
                   <li>全話の巻頭＋巻末にロゴ or 表記を掲載</li>
                   <li>「スポンサー一覧」に特別枠で掲載</li>
-                  <li>シリーズ全体ページ（作品トップ）にもロゴ掲載</li>
-                  <li>国際プロモーション資料にも掲載（任意）</li>
+                  <li>シリーズ全体ページにもロゴ掲載</li>
+                  <li>国際プロモーション資料にも掲載</li>
                 </ul>
                 <a href={FULL_LINK} className="kx-btn kx-btn-primary kx-btn-full">
-                  全巻スポンサーとして参加する（USD 7,000）
+                  <Crown size={16} /> 全巻スポンサーになる
                 </a>
               </article>
             </div>
           </div>
         </section>
 
+        {/* Comparison */}
         <section id="compare" className="kx-section kx-compare">
           <div className="kx-container">
-            <h2 className="kx-section-title">プラン比較</h2>
+            <div style={{ textAlign: "center", marginBottom: "8px" }}>
+              <div style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#e50914", fontWeight: 700, marginBottom: "12px" }}>COMPARISON</div>
+              <h2 className="kx-section-title">プラン比較</h2>
+            </div>
             <div className="kx-table-wrapper">
               <table className="kx-table">
                 <thead>
                   <tr>
-                    <th>項目</th>
+                    <th style={{ width: "30%" }}>項目</th>
                     <th>1話スポンサー</th>
-                    <th>全巻スポンサー</th>
+                    <th style={{ background: "rgba(229,9,20,0.08)" }}>全巻スポンサー</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>対象話数</td>
-                    <td>任意の1話〜複数話</td>
-                    <td>全40〜45話</td>
-                  </tr>
-                  <tr>
-                    <td>巻頭・巻末クレジット</td>
-                    <td>該当話のみ</td>
-                    <td>全話に掲載</td>
-                  </tr>
-                  <tr>
-                    <td>スポンサー一覧掲載</td>
-                    <td>通常枠</td>
-                    <td>特別枠（上位表示）</td>
-                  </tr>
-                  <tr>
-                    <td>シリーズTOPページ掲載</td>
-                    <td>なし</td>
-                    <td>ロゴ掲載あり</td>
-                  </tr>
-                  <tr>
-                    <td>国際プロモーション資料</td>
-                    <td>任意（応相談）</td>
-                    <td>掲載（任意）</td>
-                  </tr>
+                  {[
+                    ["対象話数", "任意の1話〜複数話", "全40〜45話"],
+                    ["巻頭・巻末クレジット", "該当話のみ", "全話に掲載"],
+                    ["スポンサー一覧", "通常枠", "特別枠（上位表示）"],
+                    ["シリーズTOPページ", "―", "ロゴ掲載あり"],
+                    ["国際プロモ資料", "応相談", "掲載可能"],
+                  ].map(([label, ep, full]) => (
+                    <tr key={label}>
+                      <td style={{ fontWeight: 600, color: "#cbd5e1" }}>{label}</td>
+                      <td>{ep}</td>
+                      <td style={{ color: "#ff6b6b", fontWeight: 600 }}>{full}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         </section>
 
+        {/* Flow */}
         <section id="flow" className="kx-section kx-flow">
           <div className="kx-container">
-            <h2 className="kx-section-title">お申し込みの流れ</h2>
+            <div style={{ textAlign: "center", marginBottom: "8px" }}>
+              <div style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#e50914", fontWeight: 700, marginBottom: "12px" }}>PROCESS</div>
+              <h2 className="kx-section-title">お申し込みの流れ</h2>
+            </div>
             <ol className="kx-flow-steps">
-              <li><h3>1. プランを選択</h3><p>ご希望のプランをお選びください。</p></li>
-              <li><h3>2. Stripeで決済</h3><p>決済完了後、自動返信メールを送付します。</p></li>
-              <li><h3>3. ロゴ/表記の提出</h3><p>掲載に必要な情報をご提出いただきます。</p></li>
-              <li><h3>4. 掲載・公開</h3><p>制作スケジュールに沿って掲載します。</p></li>
+              <li><h3>プランを選択</h3><p>1話 or 全巻プランをお選びください。</p></li>
+              <li><h3>Stripeで決済</h3><p>決済完了後、自動返信メールを送付します。</p></li>
+              <li><h3>ロゴ/表記を提出</h3><p>掲載に必要な情報をお送りください。</p></li>
+              <li><h3>掲載・公開</h3><p>次回エピソードから掲載されます。</p></li>
             </ol>
           </div>
         </section>
 
+        {/* Spec */}
         <section id="spec" className="kx-section kx-spec">
           <div className="kx-container">
+            <div style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#e50914", fontWeight: 700, marginBottom: "12px" }}>GUIDELINES</div>
             <h2 className="kx-section-title">掲載仕様・注意事項</h2>
             <div className="kx-spec-grid">
               <div>
@@ -3054,52 +3123,56 @@ const KukuSponsorPage = ({ onBack }) => {
                   <li>ニックネーム表記可（公序良俗の範囲内）</li>
                 </ul>
               </div>
-
               <div>
                 <h3>注意事項</h3>
                 <ul>
-                  <li>反社会勢力・宗教団体・政治結社・ネットワークビジネス等は不可</li>
+                  <li>反社会勢力・宗教団体・政治結社等は不可</li>
                   <li>迷惑メールフォルダに入る場合があります</li>
-                  <li>キャリアメール（docomo/softbank等）は届かない場合があります</li>
+                  <li>キャリアメールは届かない場合があります</li>
                 </ul>
               </div>
             </div>
           </div>
         </section>
 
+        {/* FAQ */}
         <section id="faq" className="kx-section kx-faq">
           <div className="kx-container">
-            <h2 className="kx-section-title">FAQ</h2>
-
-            <div className="kx-faq-list">
-              <div className="kx-faq-item">
-                <h3>Q. 個人でもスポンサーになれますか？</h3>
-                <p>A. はい、個人・法人いずれも可能です。</p>
-              </div>
-              <div className="kx-faq-item">
-                <h3>Q. ロゴと文字表記のどちらでも掲載できますか？</h3>
-                <p>A. ロゴ・日本語・英語のいずれも対応しています。</p>
-              </div>
+            <div style={{ textAlign: "center", marginBottom: "8px" }}>
+              <div style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#e50914", fontWeight: 700, marginBottom: "12px" }}>FAQ</div>
+              <h2 className="kx-section-title">よくある質問</h2>
+            </div>
+            <div className="kx-faq-list" style={{ maxWidth: "680px", margin: "24px auto 0" }}>
+              {faqItems.map((item, idx) => (
+                <div key={idx} className="kx-faq-item" style={{ cursor: "pointer" }} onClick={() => setOpenFaq(openFaq === idx ? null : idx)}>
+                  <h3 style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <span>Q. {item.q}</span>
+                    <ChevronRight size={16} style={{ color: "#64748b", transform: openFaq === idx ? "rotate(90deg)" : "none", transition: "transform 0.2s", flexShrink: 0 }} />
+                  </h3>
+                  {openFaq === idx && <p style={{ marginTop: "8px" }}>A. {item.a}</p>}
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
+        {/* Final CTA */}
         <section id="cta-final" className="kx-section kx-cta-final">
           <div className="kx-container kx-cta-final-inner">
             <div>
-              <h2 className="kx-section-title">物語の一部として、世界に名を刻む。</h2>
-              <p className="kx-section-lead">
-                KUKU ― 一黎明の木神 ― のスポンサーとして、<br />
-                あなたの名前・ブランドを物語の中に刻みませんか。
+              <h2 className="kx-section-title" style={{ marginBottom: "10px" }}>
+                物語の一部として、<br />世界に名を刻む。
+              </h2>
+              <p className="kx-section-lead" style={{ marginBottom: 0 }}>
+                あなたの名前・ブランドを、世界中の読者が読む漫画の中に。
               </p>
             </div>
-
-            <div className="kx-cta-final-actions kx-hero-actions">
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <a href={EPISODE_LINK} className="kx-btn kx-btn-primary">
-                1話スポンサーになる（USD 200）
+                <Gift size={16} /> 1話スポンサー（USD 200）
               </a>
               <a href={FULL_LINK} className="kx-btn kx-btn-secondary">
-                全巻スポンサー（USD 7,000）
+                <Crown size={16} /> 全巻スポンサー（USD 7,000）
               </a>
             </div>
           </div>
@@ -3534,6 +3607,7 @@ export default function App() {
             onRead={() => openDetail(featuredSeries)}
             onMyList={() => alert("Saved")}
             t={t}
+            lang={lang}
           />
           <div className="content-container">
             {historyItems.length > 0 && (
@@ -3565,7 +3639,7 @@ export default function App() {
               )}
             />
             <SectionRow title={t.section_trending} items={[...db.series].reverse()} renderItem={(s) => <PosterCard series={s} onClick={openSeries} t={t} />} />
-            <ServicePitch onShowFlow={() => navigate("flow")} />
+            <ServicePitch onShowFlow={() => navigate("flow")} t={t} />
           </div>
         </div>
       )}
