@@ -2405,7 +2405,7 @@ const StoryLanding = ({ onBack }) => {
           </div>
           <div className="story-nav" style={{ gap: 14 }}>
             <div className="story-lang">EN / JP</div>
-            <button className="story-header-cta" onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 申し込み", "_self")}>申し込み</button>
+            <button className="story-header-cta" onClick={() => window.open("mailto:contact@fomus.jp?subject=Story-to-Comic 申し込み", "_self")}>申し込み</button>
           </div>
         </div>
       </header>
@@ -2450,7 +2450,7 @@ const StoryLanding = ({ onBack }) => {
             <button
               type="button"
               className="story-cta primary cta-pulse"
-              onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 予約", "_self")}
+              onClick={() => window.open("mailto:contact@fomus.jp?subject=Story-to-Comic 予約", "_self")}
               style={{ fontSize: "17px", padding: "18px 36px" }}
             >
               無料ヒアリングを予約する
@@ -2743,8 +2743,24 @@ const StoryLanding = ({ onBack }) => {
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                         @masukei444
                       </a>
+                      <a
+                        href="https://www.instagram.com/masumasumasuo7"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex", alignItems: "center", gap: "8px",
+                          padding: "10px 18px", borderRadius: "10px",
+                          background: "rgba(255,255,255,0.06)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          color: "#e0e0e0", fontSize: "13px", fontWeight: 600,
+                          textDecoration: "none", transition: "background 0.2s, border-color 0.2s",
+                        }}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+                        @masumasumasuo7
+                      </a>
                       <button
-                        onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic お問い合わせ", "_self")}
+                        onClick={() => window.open("mailto:contact@fomus.jp?subject=Story-to-Comic お問い合わせ", "_self")}
                         style={{
                           display: "inline-flex", alignItems: "center", gap: "8px",
                           padding: "10px 18px", borderRadius: "10px",
@@ -2835,13 +2851,13 @@ const StoryLanding = ({ onBack }) => {
             <button
               type="button"
               className="story-cta primary cta-pulse"
-              onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 申し込み", "_self")}
+              onClick={() => window.open("mailto:contact@fomus.jp?subject=Story-to-Comic 申し込み", "_self")}
               style={{ fontSize: "17px", padding: "18px 40px", marginBottom: "14px" }}
             >
               Story-to-Comicを申し込む
             </button>
             <div style={{ marginTop: 14 }}>
-              <StoryCTAButton variant="secondary" onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 無料ヒアリング", "_self")}>
+              <StoryCTAButton variant="secondary" onClick={() => window.open("mailto:contact@fomus.jp?subject=Story-to-Comic 無料ヒアリング", "_self")}>
                 無料ヒアリングを予約
               </StoryCTAButton>
             </div>
@@ -2850,7 +2866,7 @@ const StoryLanding = ({ onBack }) => {
       </div>
 
       <div className="story-floating-cta">
-        <StoryCTAButton variant="primary" onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic 申し込み", "_self")}>
+        <StoryCTAButton variant="primary" onClick={() => window.open("mailto:contact@fomus.jp?subject=Story-to-Comic 申し込み", "_self")}>
           Story-to-Comic を申し込む
         </StoryCTAButton>
       </div>
