@@ -2070,12 +2070,6 @@ const NewEpisodeCard = ({ episode, onClick }) => (
 );
 
 const ServicePitch = ({ onShowFlow, t }) => {
-  const stats = [
-    { num: "¥98,000〜", label: t.sp_stat1, color: "#e8006a" },
-    { num: "2W", label: t.sp_stat2, color: "#00d4ff" },
-    { num: "3+", label: t.sp_stat3, color: "#f5c842" },
-    { num: "1/3", label: t.sp_stat4, color: "#e8006a" },
-  ];
   return (
     <section style={{
       margin: "4rem 4% 5rem",
@@ -2133,34 +2127,6 @@ const ServicePitch = ({ onShowFlow, t }) => {
           {t.sp_sub_2}<br />
           {t.sp_sub_3}
         </p>
-        {/* Stats */}
-        <div style={{ display: "flex", gap: "0", flexWrap: "wrap", marginBottom: "2rem" }}>
-          {stats.map((s, i) => (
-            <div key={s.label} style={{
-              padding: "1rem 1.4rem",
-              background: "rgba(240,238,248,0.03)",
-              border: "1px solid rgba(240,238,248,0.06)",
-              borderLeft: i === 0 ? `3px solid ${s.color}` : `3px solid ${s.color}`,
-              marginRight: "-1px",
-              flex: "0 0 auto",
-              minWidth: "clamp(100px, 22%, 140px)",
-              transition: "background 0.2s, transform 0.2s",
-              cursor: "default",
-            }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(240,238,248,0.06)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(240,238,248,0.03)"; e.currentTarget.style.transform = "translateY(0)"; }}
-            >
-              <div style={{
-                fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)", fontWeight: 900, color: "#f0eef8",
-                fontFamily: "'Bebas Neue', 'Inter', sans-serif", letterSpacing: "0.02em",
-              }}>{s.num}</div>
-              <div style={{
-                fontSize: "0.7rem", color: "rgba(240,238,248,0.4)", marginTop: "0.15rem",
-                fontFamily: "'Space Mono', monospace", letterSpacing: "0.08em",
-              }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
         {/* CTAs */}
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
           <button
