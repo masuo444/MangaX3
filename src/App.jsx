@@ -1096,9 +1096,14 @@ body {
 .carousel { display: flex; overflow-x: auto; gap: 0.5rem; padding-bottom: 2rem; padding-right: 4%; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .carousel::-webkit-scrollbar { display: none; }
 
-.poster-card { position: relative; flex: 0 0 auto; width: 110px; aspect-ratio: 2/3; border-radius: 6px; overflow: hidden; background: var(--bg-card); scroll-snap-align: start; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), z-index 0.3s, box-shadow 0.35s; cursor: pointer; border: 1px solid transparent; }
-@media (min-width: 768px) { .poster-card { width: 180px; } .poster-card:hover { transform: scale(1.08) translateY(-6px); z-index: 10; box-shadow: 0 16px 40px rgba(0,0,0,0.6); border-color: rgba(229,9,20,0.4); } }
-.poster-image { width: 100%; height: 100%; object-fit: cover; }
+.poster-card { position: relative; flex: 0 0 auto; width: 110px; border-radius: 6px; overflow: hidden; background: var(--bg-card); scroll-snap-align: start; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), z-index 0.3s, box-shadow 0.35s; cursor: pointer; border: 1px solid transparent; }
+@media (min-width: 768px) { .poster-card { width: 180px; } .poster-card:hover { transform: scale(1.05) translateY(-4px); z-index: 10; box-shadow: 0 16px 40px rgba(0,0,0,0.6); border-color: rgba(229,9,20,0.4); } }
+.poster-thumb { position: relative; width: 100%; aspect-ratio: 2/3; overflow: hidden; border-radius: 6px 6px 0 0; }
+.poster-image { width: 100%; height: 100%; object-fit: cover; display: block; }
+.poster-info { padding: 6px 6px 8px; }
+.poster-info-title { font-size: 11px; font-weight: 700; color: #fff; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.poster-info-sub { font-size: 10px; color: #999; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 768px) { .poster-info-title { font-size: 13px; } .poster-info-sub { font-size: 11px; } }
 
 .continue-card { flex: 0 0 auto; width: 240px; background: var(--bg-card); border-radius: 4px; overflow: hidden; margin-right: 0.5rem; transition: transform 0.3s; cursor: pointer; }
 @media (min-width: 768px) { .continue-card { width: 300px; } .continue-card:hover { transform: scale(1.05); z-index: 10; } }
@@ -2053,18 +2058,28 @@ const SectionRow = ({ title, items, renderItem }) => (
 
 const PosterCard = ({ series, onClick, t }) => (
   <div onClick={() => onClick(series)} className="poster-card">
-    <img src={series.coverUrl} className="poster-image" loading="lazy" />
-    <div className="absolute top-1 left-1 text-red-600 font-bold text-xs" style={{ color: "var(--primary-red)", textShadow: "0 1px 2px black" }}>N</div>
-    {series.isNew && <div className="absolute bottom-0 width-full bg-red-600/90 text-white text-[9px] font-bold text-center py-0.5 w-full">{t.new_badge}</div>}
+    <div className="poster-thumb">
+      <img src={series.coverUrl} className="poster-image" loading="lazy" />
+      {series.isNew && <div style={{ position: "absolute", top: 6, left: 6, background: "var(--primary-red)", color: "#fff", fontSize: "9px", fontWeight: 800, padding: "2px 6px", borderRadius: 4 }}>{t.new_badge}</div>}
+    </div>
+    <div className="poster-info">
+      <div className="poster-info-title">{series.title}</div>
+      <div className="poster-info-sub">{series.tags?.join(" / ") || series.author}</div>
+    </div>
   </div>
 );
 
 const NewEpisodeCard = ({ episode, onClick }) => (
   <div onClick={() => onClick(episode)} className="poster-card">
-    <img src={episode.thumbUrl} className="poster-image" loading="lazy" />
-    <div className="absolute bottom-0 w-full" style={{ background: "linear-gradient(transparent, rgba(0,0,0,0.85))", padding: "1.5rem 0.4rem 0.35rem" }}>
-      <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, textShadow: "0 1px 2px black" }}>{episode.series?.title}</div>
-      <div style={{ fontSize: "0.6rem", color: "#ccc" }}>#{episode.number}</div>
+    <div className="poster-thumb">
+      <img src={episode.thumbUrl} className="poster-image" loading="lazy" />
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "linear-gradient(transparent, rgba(0,0,0,0.7))", padding: "16px 6px 6px" }}>
+        <div style={{ fontSize: "10px", fontWeight: 800, color: "#fff", textShadow: "0 1px 3px rgba(0,0,0,0.8)" }}>EP.{episode.number}</div>
+      </div>
+    </div>
+    <div className="poster-info">
+      <div className="poster-info-title">{episode.series?.title}</div>
+      <div className="poster-info-sub">{episode.publishDate} {episode.likes ? `· ♥ ${episode.likes}` : ""}</div>
     </div>
   </div>
 );
