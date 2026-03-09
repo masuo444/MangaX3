@@ -2060,7 +2060,6 @@ const PosterCard = ({ series, onClick, t }) => (
   <div onClick={() => onClick(series)} className="poster-card">
     <div className="poster-thumb">
       <img src={series.coverUrl} className="poster-image" loading="lazy" />
-      {series.isNew && <div style={{ position: "absolute", top: 6, left: 6, background: "var(--primary-red)", color: "#fff", fontSize: "9px", fontWeight: 800, padding: "2px 6px", borderRadius: 4 }}>{t.new_badge}</div>}
     </div>
     <div className="poster-info">
       <div className="poster-info-title">{series.title}</div>
