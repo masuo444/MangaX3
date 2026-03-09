@@ -3223,6 +3223,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
 
   const pageCount = chapter.pageCount || 20;
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
+  const FAST_PRELOAD = 3; // show reader after first N pages loaded
 
   // Reset on chapter change
   useEffect(() => {
@@ -3251,7 +3252,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
     return () => { cancelled = true; };
   }, [chapter.id, series.id, chapter.number]);
 
-  // Preload images
+  // Preload images — first 3 pages sequentially (fast start), then rest in parallel
   useEffect(() => {
     let cancelled = false;
     const loadImage = (url) =>
@@ -3262,16 +3263,29 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
         img.src = url;
       });
 
+    const loadPage = async (p) => {
+      const basePng = `/manga/${series.id}/ch${chapter.number}/${p}.png`;
+      const baseJpg = `/manga/${series.id}/ch${chapter.number}/${p}.jpg`;
+      const ok = await loadImage(basePng);
+      if (!ok) await loadImage(baseJpg);
+      if (!cancelled) setLoadedCount((c) => c + 1);
+    };
+
     const preload = async () => {
-      for (const p of pages) {
+      // Phase 1: load first few pages sequentially for fast start
+      for (let i = 0; i < Math.min(FAST_PRELOAD, pageCount); i++) {
         if (cancelled) return;
-        const basePng = `/manga/${series.id}/ch${chapter.number}/${p}.png`;
-        const baseJpg = `/manga/${series.id}/ch${chapter.number}/${p}.jpg`;
-        const ok = await loadImage(basePng);
-        if (!ok) await loadImage(baseJpg);
-        setLoadedCount((c) => c + 1);
+        await loadPage(pages[i]);
       }
       if (!cancelled) setPreloaded(true);
+
+      // Phase 2: load remaining pages in parallel batches of 4
+      const remaining = pages.slice(FAST_PRELOAD);
+      const BATCH = 4;
+      for (let i = 0; i < remaining.length; i += BATCH) {
+        if (cancelled) return;
+        await Promise.all(remaining.slice(i, i + BATCH).map((p) => loadPage(p)));
+      }
     };
 
     preload();
@@ -3378,6 +3392,8 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
               <img
                 id={`reader-img-${p}`}
                 src={imgSrc}
+                loading={p <= FAST_PRELOAD ? "eager" : "lazy"}
+                decoding="async"
                 onError={(e) => {
                   // Fallback chain: _en.png → original .png → .jpg → placeholder
                   if (useLangImg && !e.target.dataset.fallback) {
@@ -3423,7 +3439,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
         )}
       </div>
 
-      {/* Loading overlay */}
+      {/* Loading overlay — only until first few pages are ready */}
       {!preloaded && (
         <div style={{
           position: "fixed", inset: 0, background: "rgba(0,0,0,0.92)",
@@ -3433,9 +3449,9 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
           <Loader2 className="animate-spin" size={32} />
           <div style={{ fontWeight: 700, fontSize: 16 }}>{(READER_UI[selectedLang] || READER_UI.off).loading}</div>
           <div style={{ width: 200, height: 4, borderRadius: 2, background: "#333", overflow: "hidden" }}>
-            <div style={{ height: "100%", background: "#e50914", borderRadius: 2, width: `${Math.round((loadedCount / pageCount) * 100)}%`, transition: "width 0.3s" }} />
+            <div style={{ height: "100%", background: "#e50914", borderRadius: 2, width: `${Math.round((loadedCount / Math.min(FAST_PRELOAD, pageCount)) * 100)}%`, transition: "width 0.3s" }} />
           </div>
-          <div style={{ fontSize: 13, color: "#888" }}>{loadedCount} / {pageCount} pages</div>
+          <div style={{ fontSize: 13, color: "#888" }}>{loadedCount} / {Math.min(FAST_PRELOAD, pageCount)} pages</div>
         </div>
       )}
     </div>
