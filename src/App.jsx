@@ -5,7 +5,7 @@ import {
   Briefcase, Smile, Link as LinkIcon, AlertCircle, FileText, Palette,
   FileCheck, Mail, Languages, Lock, Sparkles, Check, Trophy, Handshake, Building,
   ThumbsUp, MessageCircle, Gift, Clock, Bell, Download, Loader2, Coins, Calendar,
-  Users, PenTool, Folder, Cpu, Rocket, Coffee, CheckCircle,
+  Users, PenTool, Folder, Cpu, Rocket, Coffee, CheckCircle, Bookmark, BarChart3, BookOpen,
 } from "lucide-react";
 
 // ==========================================
@@ -1430,221 +1430,80 @@ body {
 /* ==========================================
    Install Page
    ========================================== */
-.install-page {
-  background: radial-gradient(circle at 10% 15%, rgba(229,9,20,0.08), transparent 32%), #0b0b0b;
-  color: #fff;
+.bookshelf-page, .ranking-page {
   min-height: 100vh;
   padding: 100px 0 80px;
-}
-.install-container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-.install-hero {
-  position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 26px 60px rgba(0,0,0,0.45);
-  background: #0a0a0a;
-  padding: 0;
-  margin-bottom: 18px;
-}
-.install-hero-bg {
-  width: 100%;
-  height: clamp(260px, 48vw, 560px);
-  overflow: hidden;
-}
-.install-hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.install-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(229,9,20,0.16);
-  border: 1px solid rgba(229,9,20,0.35);
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-}
-.install-title { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.2; letter-spacing: -0.01em; }
-.install-lead { margin: 0; color: #e8e8e8; line-height: 1.7; }
-.install-hero-body { position: relative; z-index: 2; display: grid; gap: 12px; }
-.install-hero-body > .install-download-btn { width: fit-content; }
-.install-hero-visual { display: none; }
-.install-hero-card {
-  width: 100%;
-  max-width: 1080px;
-  margin: 0 auto;
-  border-radius: 18px;
-  padding: 26px;
-  background: linear-gradient(160deg, rgba(229,9,20,0.18), rgba(20,30,60,0.85));
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 18px 46px rgba(0,0,0,0.5);
-  position: relative;
-  overflow: hidden;
-}
-.install-hero-card::before {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  opacity: 0.6;
-}
-.install-hero-card::after {
-  content: "";
-  position: absolute;
-  top: -60px; right: -60px;
-  width: 160px; height: 160px;
-  background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 55%);
-  transform: rotate(18deg);
-}
-.install-hero-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.12);
+  background: radial-gradient(circle at 10% 15%, rgba(229,9,20,0.06), transparent 32%), #0b0b0b;
   color: #fff;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  position: relative;
-  z-index: 1;
 }
-.install-hero-card h3 {
-  margin: 12px 0 6px;
-  font-size: 26px;
-  letter-spacing: -0.01em;
-  position: relative;
-  z-index: 1;
+.bookshelf-container, .ranking-container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+.bookshelf-header, .ranking-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
 }
-.install-hero-card p {
-  margin: 0 0 14px;
-  color: #f1f1f1;
-  line-height: 1.6;
-  position: relative;
-  z-index: 1;
+.bookshelf-header h1, .ranking-header h1 {
+  font-size: clamp(22px, 4vw, 32px); margin: 0; letter-spacing: -0.01em;
 }
-.install-hero-meta { display: flex; flex-wrap: wrap; gap: 8px; position: relative; z-index: 1; }
-.install-meta-pill {
-  padding: 7px 10px;
-  border-radius: 10px;
-  background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: #f7f7f7;
-  font-size: 12px;
-  letter-spacing: 0.02em;
+.bookshelf-empty {
+  text-align: center; padding: 60px 20px; color: #888;
 }
-.install-download-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  padding: 14px 18px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #e50914, #ff6b6b);
-  color: #fff;
-  font-weight: 800;
-  text-decoration: none;
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 14px 36px rgba(229,9,20,0.35);
+.bookshelf-empty svg { margin-bottom: 16px; opacity: 0.4; }
+.bookshelf-empty p { font-size: 15px; line-height: 1.6; }
+.bookshelf-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 }
-.install-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.install-section {
-  margin-top: 32px;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 16px;
-  padding: 22px;
-  background: rgba(15,15,15,0.85);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-}
-.install-section h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0.01em; }
-.install-section p { margin: 0 0 12px; color: #d4d4d4; line-height: 1.7; }
-.install-steps { display: grid; gap: 12px; }
-.install-step {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 12px;
-  align-items: start;
-  padding: 12px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.03);
-}
-.install-shot {
-  grid-column: 1 / -1;
-  margin-top: 10px;
-  border-radius: 10px;
-  overflow: hidden;
+.bookshelf-card {
+  cursor: pointer; border-radius: 12px; overflow: hidden;
   border: 1px solid rgba(255,255,255,0.08);
-  background: #0f0f0f;
+  background: #181818; transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
 }
-.install-shot img {
-  display: block;
-  width: 100%;
-  height: auto;
+.bookshelf-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
+.bookshelf-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
+.bookshelf-card-info { padding: 8px 10px; }
+.bookshelf-card-title { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bookshelf-card-ep { font-size: 11px; color: #999; margin-top: 2px; }
+.bookshelf-remove {
+  position: absolute; top: 6px; right: 6px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(0,0,0,0.7); border: none; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0; transition: opacity 0.2s;
 }
-.install-num {
-  width: 34px; height: 34px;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  background: linear-gradient(135deg, #e50914, #ff6b6b);
-  color: #fff;
-  box-shadow: 0 8px 20px rgba(229,9,20,0.3);
-}
-.install-step strong { display: block; margin-bottom: 4px; }
-.install-note {
-  margin: 10px 0 0;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.06);
-  color: #f7f7f7;
-  font-size: 14px;
-  line-height: 1.6;
-}
-.install-alert {
-  border: 1px solid rgba(229,9,20,0.4);
-  background: rgba(229,9,20,0.1);
-  color: #ffecec;
-}
-.install-columns { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-.install-list { margin: 0; padding-left: 18px; color: #d4d4d4; line-height: 1.7; }
-.install-subtitle { margin: 12px 0 8px; font-size: 18px; }
-.install-link-box {
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 12px;
+.bookshelf-card:hover .bookshelf-remove { opacity: 1; }
+.ranking-list { display: grid; gap: 12px; }
+.ranking-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 16px; border-radius: 14px;
   background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer; transition: background 0.2s;
 }
-.install-chip {
-  display: inline-block;
-  padding: 6px 10px;
-  margin: 4px 6px 0 0;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
-  font-size: 13px;
-  color: #e5e5e5;
+.ranking-item:hover { background: rgba(255,255,255,0.08); }
+.ranking-rank {
+  font-size: 20px; font-weight: 800; min-width: 36px; text-align: center;
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.install-footer {
-  margin-top: 32px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  color: #cfcfcf;
-  font-size: 14px;
+.ranking-rank.top3 {
+  font-size: 24px;
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.install-footer strong { color: #fff; }
+.ranking-thumb {
+  width: 56px; height: 80px; border-radius: 8px; object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.ranking-info { flex: 1; min-width: 0; }
+.ranking-title { font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ranking-meta { font-size: 12px; color: #999; margin-top: 3px; }
+.ranking-likes {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 14px; font-weight: 700; color: #e50914;
+}
 @media (max-width: 640px) {
-  .install-page { padding: 90px 0 70px; }
-  .install-section { padding: 18px; }
-  .install-hero { padding: 24px; }
+  .bookshelf-page, .ranking-page { padding: 90px 0 70px; }
+  .bookshelf-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
 }
 `;
 
@@ -1699,7 +1558,7 @@ const DEFAULT_DB = {
 
 const RESOURCES = {
   ja: {
-    nav_home: "ホーム", nav_new: "新着", nav_mypage: "マイページ", nav_partners: "スポンサー", nav_install: "ダウンロード",
+    nav_home: "ホーム", nav_new: "新着", nav_mypage: "マイページ", nav_partners: "スポンサー", nav_bookshelf: "本棚", nav_ranking: "ランキング",
     read_now: "読む", my_list: "マイリスト",
     section_continue: "視聴中コンテンツ", section_trending: "新着", section_new: "新着エピソード",
     match: "マッチ", new_badge: "新着",
@@ -1708,7 +1567,7 @@ const RESOURCES = {
     production: "制作中", sponsor_slots: "スポンサー枠", become_sponsor: "スポンサーになる",
     support_btn: "支援する", sponsor_desc: "制作を支援して巻末に名前を掲載しよう！", sponsor_price: "一口 5,000円",
     admin_title: "クリエイター管理", tab_dashboard: "ダッシュボード", tab_works: "作品一覧",
-    close: "閉じる", lang_switch: "English", guest_name: "ゲスト",
+    close: "閉じる", lang_switch: "English", guest_name: "ゲスト", bookshelf_empty: "本棚にはまだ作品がありません。\n作品詳細ページからブックマークを追加しましょう。", bookshelf_add: "本棚に追加", bookshelf_added: "本棚に追加済み",
 
     // Studio LP: サービス比較 (Comparison)
     comp_title_trad: "伝統的な漫画制作",
@@ -1754,7 +1613,7 @@ const RESOURCES = {
     studio_book_option: "製本サービス (+1,000円/冊〜)",
   },
   en: {
-    nav_home: "Home", nav_new: "New", nav_mypage: "My Page", nav_partners: "Partners", nav_install: "Download",
+    nav_home: "Home", nav_new: "New", nav_mypage: "My Page", nav_partners: "Partners", nav_bookshelf: "Bookshelf", nav_ranking: "Ranking",
     read_now: "Read", my_list: "My List",
     section_continue: "Continue Reading", section_trending: "Trending", section_new: "New Releases",
     match: "Match", new_badge: "NEW",
@@ -1763,7 +1622,7 @@ const RESOURCES = {
     production: "In Production", sponsor_slots: "Sponsor Slots", become_sponsor: "Become a Sponsor",
     support_btn: "Support", sponsor_desc: "Support production and get credited!", sponsor_price: "$50 / Slot",
     admin_title: "Creator Studio", tab_dashboard: "Dashboard", tab_works: "Works",
-    close: "Close", lang_switch: "日本語", guest_name: "Guest",
+    close: "Close", lang_switch: "日本語", guest_name: "Guest", bookshelf_empty: "Your bookshelf is empty.\nAdd series from the detail page.", bookshelf_add: "Add to Shelf", bookshelf_added: "On Shelf",
 
     // Studio LP: Comparison
     comp_title_trad: "Traditional Manga Production",
@@ -1807,7 +1666,7 @@ const RESOURCES = {
     studio_book_option: "Printing option (+1,000 JPY/book~)",
   },
   fr: {
-    nav_home: "Accueil", nav_new: "Nouveautés", nav_mypage: "Mon Profil", nav_partners: "Sponsors", nav_install: "Télécharger",
+    nav_home: "Accueil", nav_new: "Nouveautés", nav_mypage: "Mon Profil", nav_partners: "Sponsors", nav_bookshelf: "Bibliothèque", nav_ranking: "Classement",
     read_now: "Lire", my_list: "Ma Liste",
     section_continue: "Continuer la lecture", section_trending: "Tendances", section_new: "Nouveaux épisodes",
     match: "Correspondance", new_badge: "NOUVEAU",
@@ -1816,7 +1675,7 @@ const RESOURCES = {
     production: "En production", sponsor_slots: "Places sponsor", become_sponsor: "Devenir sponsor",
     support_btn: "Soutenir", sponsor_desc: "Soutenez la production et soyez crédité !", sponsor_price: "50 $ / Place",
     admin_title: "Studio Créateur", tab_dashboard: "Tableau de bord", tab_works: "Œuvres",
-    close: "Fermer", lang_switch: "日本語", guest_name: "Invité",
+    close: "Fermer", lang_switch: "日本語", guest_name: "Invité", bookshelf_empty: "Votre bibliothèque est vide.\nAjoutez des séries depuis la page de détails.", bookshelf_add: "Ajouter", bookshelf_added: "Ajouté",
     comp_title_trad: "Production manga traditionnelle", comp_sub_trad: "(Artisanat & Temps)",
     comp_title_fomus: "FOMUS Story-to-Comic", comp_sub_fomus: "(IA & Innovation Agile)",
     comp_cost_trad: "300k–500k JPY / 10P", comp_cost_sub_trad: "Coût élevé dû aux processus multiples",
@@ -1839,7 +1698,7 @@ const RESOURCES = {
     studio_book_option: "Option impression (+1 000 JPY/livre~)",
   },
   ar: {
-    nav_home: "الرئيسية", nav_new: "جديد", nav_mypage: "صفحتي", nav_partners: "الرعاة", nav_install: "تحميل",
+    nav_home: "الرئيسية", nav_new: "جديد", nav_mypage: "صفحتي", nav_partners: "الرعاة", nav_bookshelf: "مكتبتي", nav_ranking: "الترتيب",
     read_now: "اقرأ", my_list: "قائمتي",
     section_continue: "متابعة القراءة", section_trending: "الرائج", section_new: "حلقات جديدة",
     match: "تطابق", new_badge: "جديد",
@@ -1848,7 +1707,7 @@ const RESOURCES = {
     production: "قيد الإنتاج", sponsor_slots: "مقاعد الرعاية", become_sponsor: "كن راعياً",
     support_btn: "ادعم", sponsor_desc: "ادعم الإنتاج واحصل على ذكر اسمك!", sponsor_price: "٥٠ $ / مقعد",
     admin_title: "استوديو المبدع", tab_dashboard: "لوحة التحكم", tab_works: "الأعمال",
-    close: "إغلاق", lang_switch: "日本語", guest_name: "ضيف",
+    close: "إغلاق", lang_switch: "日本語", guest_name: "ضيف", bookshelf_empty: "مكتبتك فارغة.\nأضف مسلسلات من صفحة التفاصيل.", bookshelf_add: "أضف للمكتبة", bookshelf_added: "في المكتبة",
     comp_title_trad: "إنتاج المانغا التقليدي", comp_sub_trad: "(حرفة ووقت)",
     comp_title_fomus: "FOMUS Story-to-Comic", comp_sub_fomus: "(ذكاء اصطناعي وابتكار مرن)",
     comp_cost_trad: "٣٠٠-٥٠٠ ألف ين / ١٠ صفحات", comp_cost_sub_trad: "تكلفة عالية بسبب العمليات المتعددة",
@@ -1873,14 +1732,16 @@ const RESOURCES = {
 };
 
 const viewToPath = (view) => {
-  if (view === "install") return "/download";
+  if (view === "bookshelf") return "/bookshelf";
+  if (view === "ranking") return "/ranking";
   if (view === "kukuSponsor") return "/partners";
   return "/";
 };
 
 const pathToView = (path) => {
   if (!path) return "home";
-  if (path.startsWith("/download")) return "install";
+  if (path.startsWith("/bookshelf")) return "bookshelf";
+  if (path.startsWith("/ranking")) return "ranking";
   if (path.startsWith("/partners")) return "kukuSponsor";
   return "home";
 };
@@ -1989,7 +1850,8 @@ const Header = ({ scrolled, activeTab, setActiveTab, setLang, lang }) => {
   const t = RESOURCES[lang];
   const navItems = [
     { key: "home", label: t.nav_home, target: "home" },
-    { key: "install", label: t.nav_install, target: "install" },
+    { key: "bookshelf", label: t.nav_bookshelf, target: "bookshelf" },
+    { key: "ranking", label: t.nav_ranking, target: "ranking" },
     { key: "partners", label: t.nav_partners, target: "kukuSponsor" },
   ];
 
@@ -2033,7 +1895,8 @@ const Header = ({ scrolled, activeTab, setActiveTab, setLang, lang }) => {
 const BottomNav = ({ activeTab, setActiveTab, t }) => {
   const navItems = [
     { key: "home", label: t.nav_home, target: "home", icon: <Home size={24} /> },
-    { key: "install", label: t.nav_install, target: "install", icon: <Download size={24} /> },
+    { key: "bookshelf", label: t.nav_bookshelf, target: "bookshelf", icon: <Bookmark size={24} /> },
+    { key: "ranking", label: t.nav_ranking, target: "ranking", icon: <BarChart3 size={24} /> },
     { key: "partners", label: t.nav_partners, target: "kukuSponsor", icon: <Handshake size={24} /> },
   ];
 
@@ -2053,184 +1916,91 @@ const BottomNav = ({ activeTab, setActiveTab, t }) => {
   );
 };
 
-const InstallPage = () => {
-  const installSteps = [
-    {
-      title: "ZIPファイルをダウンロード",
-      body: "ダウンロードページから最新版のZIPファイルを取得します。",
-      image: "/install/step1-download.png",
-    },
-    {
-      title: "ZIPファイルを展開",
-      body: "ダウンロードしたZIPを右クリックし、「すべて展開 / 解凍」を選んで任意の場所に展開します。",
-    },
-    {
-      title: "Chrome拡張機能ページを開く",
-      body: "Chrome右上メニュー → 「拡張機能」 → 「拡張機能を管理」をクリック。",
-      image: "/install/step3-chrome-extension.png",
-    },
-    {
-      title: "デベロッパーモードをON → 拡張機能を読み込む",
-      body: "拡張機能ページ右上の「デベロッパーモード」をオンにし、「パッケージ化されていない拡張機能を読み込む」から展開フォルダを選択します。",
-      image: "/install/step5-load-unpacked.png",
-    },
-    {
-      title: "ツールバーに固定",
-      body: "拡張機能アイコン一覧からピン留めし、常に表示されるようにします。",
-      image: "/install/step6-pin-toolbar.png",
-    },
-    {
-      title: "インストール完了",
-      body: "ツールバーのFOMUS MANGA CREATORアイコンをクリックして起動できます。",
-    },
-  ];
+const BOOKSHELF_KEY = "mx_bookshelf";
+const getBookshelf = () => JSON.parse(localStorage.getItem(BOOKSHELF_KEY) || "[]");
+const toggleBookshelf = (seriesId) => {
+  const list = getBookshelf();
+  const idx = list.indexOf(seriesId);
+  if (idx >= 0) list.splice(idx, 1);
+  else list.push(seriesId);
+  localStorage.setItem(BOOKSHELF_KEY, JSON.stringify(list));
+  return list;
+};
+const isBookmarked = (seriesId) => getBookshelf().includes(seriesId);
 
-  const apiSteps = [
-    { title: "FAL AIアカウントを作成", body: "FAL AI公式サイトにアクセスし、アカウントを作成します。" },
-    { title: "APIキーを取得", body: "ダッシュボードの「API Keys」で「Add key」をクリックし、キーを生成します。" },
-    { title: "クレジットをチャージ", body: "クレジットページで必要額をチャージ。初回は10ドル程度で十分です。" },
-    { title: "APIキーを設定", body: "FOMUS MANGA CREATORを起動し、右上の「⚙️ API設定」から取得したキーを保存します。" },
-  ];
+const BookshelfPage = ({ db, t, onOpenSeries }) => {
+  const [shelf, setShelf] = useState(getBookshelf);
+  const savedSeries = db.series.filter((s) => shelf.includes(s.id));
 
-  const usageSteps = [
-    { title: "サムネイルを作りたいページを開く", body: "ブログやBrainの記事など対象ページを開きます。" },
-    { title: "右クリックメニューを開く", body: "ページ上で右クリックし「ページ全体からデザインを作成」を選択。" },
-    { title: "アスペクト比を選択", body: "16:9（YouTube等） / 4:5（Instagramフィード） / 1:1（正方形） / 9:16（ストーリー系）。" },
-    { title: "テーマカラーを選択", body: "好みの配色を選択。「おまかせ」でAIが自動選定。" },
-    { title: "デザインスタイルを選択", body: "モダン / ビビッド / プロフェッショナル / ミニマルから選択。" },
-    { title: "生成ボタンをクリック", body: "30秒〜1分ほどで生成。画像は自動ダウンロードされます。" },
-  ];
-
-  const troubleshooting = [
-    {
-      title: "生成に失敗する場合",
-      bullets: [
-        "FAL APIキーが正しく設定されているか確認",
-        "クレジット残高があるか（残高確認）",
-        "ネットワーク接続が安定しているか",
-        "ページ内容が入力されているか",
-      ],
-    },
-    {
-      title: "APIキーのエラー",
-      bullets: [
-        "コピペ時に余分なスペースが入っていないか",
-        "FAL AIダッシュボードでキーが有効か確認",
-        "必要に応じて新しいキーを生成して再設定",
-      ],
-    },
-    {
-      title: "タイムアウトエラー",
-      bullets: [
-        "ページ内容を短くシンプルにする",
-        "ネットワーク接続を確認",
-        "時間を置いて再試行（サーバー混雑の可能性）",
-      ],
-    },
-    {
-      title: "拡張機能が起動しない",
-      bullets: [
-        "Chromeを再起動",
-        "chrome://extensions/ で有効化されているか確認",
-        "削除して再インストール",
-        "Chromeが最新バージョンか確認",
-      ],
-    },
-  ];
+  const handleRemove = (e, seriesId) => {
+    e.stopPropagation();
+    setShelf(toggleBookshelf(seriesId));
+  };
 
   return (
-    <div className="install-page">
-      <div className="install-container">
-        <div className="install-hero">
-          <div className="install-hero-bg">
-            <img src="/install/download-hero.jpg" alt="FOMUS MANGA CREATOR ヒーロー" />
-          </div>
+    <div className="bookshelf-page">
+      <div className="bookshelf-container">
+        <div className="bookshelf-header">
+          <BookOpen size={28} color="#e50914" />
+          <h1>{t.nav_bookshelf}</h1>
         </div>
-
-        <div className="install-hero-card">
-          <div className="install-hero-body">
-            <span className="install-badge">FOMUS MANGA CREATOR</span>
-            <h1 className="install-title">ダウンロード & インストール</h1>
-            <p className="install-lead">最新版ZIPの入手からChromeへの導入、API設定、基本操作、高度な使い方までまとめました。</p>
-            <a className="install-download-btn" href="/MANGA_creator.zip" download>
-              <Download size={18} /> ZIPをダウンロード
-            </a>
-            <div className="install-footer">
-              <strong>バージョン</strong> 最新版ZIPをお使いください / <strong>対応</strong> Google Chrome
-            </div>
+        {savedSeries.length === 0 ? (
+          <div className="bookshelf-empty">
+            <Bookmark size={48} />
+            <p>{t.bookshelf_empty}</p>
           </div>
-        </div>
-
-        <div className="install-section">
-          <h2>インストール方法</h2>
-          <div className="install-steps">
-            {installSteps.map((step, idx) => (
-              <div key={step.title} className="install-step">
-                <div className="install-num">{idx + 1}</div>
-                <div>
-                  <strong>{step.title}</strong>
-                  <div>{step.body}</div>
-                </div>
-                {step.image && (
-                  <div className="install-shot">
-                    <img src={step.image} alt={`${step.title} のスクリーンショット`} loading="lazy" />
+        ) : (
+          <div className="bookshelf-grid">
+            {savedSeries.map((s) => (
+              <div key={s.id} className="bookshelf-card" onClick={() => onOpenSeries(s, { forceDetail: true })}>
+                <button className="bookshelf-remove" onClick={(e) => handleRemove(e, s.id)}>
+                  <X size={14} />
+                </button>
+                <img src={s.coverUrl} alt={s.title} />
+                <div className="bookshelf-card-info">
+                  <div className="bookshelf-card-title">{s.title}</div>
+                  <div className="bookshelf-card-ep">
+                    {db.chapters.filter((c) => c.seriesId === s.id && c.status === "published").length} {t.episodes}
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="install-section">
-          <h2>初期設定（FAL APIキーの取得）</h2>
-          <div className="install-steps">
-            {apiSteps.map((step, idx) => (
-              <div key={step.title} className="install-step">
-                <div className="install-num">{idx + 1}</div>
-                <div>
-                  <strong>{step.title}</strong>
-                  <div>{step.body}</div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="install-note install-alert">
-            ⚠️ セキュリティ: APIキーはブラウザのローカルストレージに平文保存されます。共有PCや公共のPCでは使用しないでください。キーが漏洩すると第三者に不正利用される可能性があります。
-          </div>
-        </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-        <div className="install-section">
-          <h2>基本的な使い方</h2>
-          <div className="install-steps">
-            {usageSteps.map((step, idx) => (
-              <div key={step.title} className="install-step">
-                <div className="install-num">{idx + 1}</div>
-                <div>
-                  <strong>{step.title}</strong>
-                  <div>{step.body}</div>
+const RankingPage = ({ db, t, onOpenReader }) => {
+  const ranked = db.chapters
+    .filter((c) => c.status === "published" && c.likes)
+    .sort((a, b) => b.likes - a.likes);
+
+  return (
+    <div className="ranking-page">
+      <div className="ranking-container">
+        <div className="ranking-header">
+          <Trophy size={28} color="#ffd700" />
+          <h1>{t.nav_ranking}</h1>
+        </div>
+        <div className="ranking-list">
+          {ranked.map((ch, idx) => {
+            const series = db.series.find((s) => s.id === ch.seriesId);
+            if (!series) return null;
+            return (
+              <div key={ch.id} className="ranking-item" onClick={() => onOpenReader(ch, series)}>
+                <div className={`ranking-rank ${idx < 3 ? "top3" : ""}`}>{idx + 1}</div>
+                <img className="ranking-thumb" src={ch.thumbUrl || series.coverUrl} alt={series.title} />
+                <div className="ranking-info">
+                  <div className="ranking-title">{series.title} — {t.episodes} {ch.number}</div>
+                  <div className="ranking-meta">{ch.publishDate}</div>
                 </div>
+                <div className="ranking-likes"><Heart size={16} /> {ch.likes.toLocaleString()}</div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-
-        <div className="install-section">
-          <h2>トラブルシューティング</h2>
-          <div className="install-columns">
-            {troubleshooting.map((item) => (
-              <div key={item.title} className="install-link-box">
-                <h3 className="install-subtitle">{item.title}</h3>
-                <ul className="install-list">
-                  {item.bullets.map((b) => (
-                    <li key={b}>{b}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          <div className="install-note">それでも解決しない場合：開発者のXアカウント（@masukei444）にDMでお問い合わせください。</div>
-        </div>
-
       </div>
     </div>
   );
@@ -2445,7 +2215,7 @@ const ProductionFlow = () => (
       </div>
       <div className="feature-card">
         <strong>02. ヒアリング（60分）</strong>
-        <p style={{ color: "#cfcfcf", lineHeight: 1.5 }}>まっすーがあなたの物語を丁寧に聞きます。</p>
+        <p style={{ color: "#cfcfcf", lineHeight: 1.5 }}>プロデューサーまっすーが、あなたの物語を丁寧に引き出します。</p>
       </div>
       <div className="feature-card">
         <strong>03. 構成案（10ページ）提出</strong>
@@ -2889,23 +2659,166 @@ const StoryLanding = ({ onBack }) => {
           </div>
         </section>
 
-        <section className="story-section reveal">
-          <h2 className="story-section-title">FOMUSならではの強み</h2>
-          <div className="story-strength-grid">
-            {[
-              { icon: <MessageCircle size={22} />, title: "まっすーの\u201C引き出すヒアリング\u201D", text: "話を聞くだけで構成ができる。", tone: "amber" },
-              { icon: <Wand2 size={22} />, title: "AI×人のハイブリッド制作", text: "速い・高品質・安定。", tone: "cyan" },
-              { icon: <Globe size={22} />, title: "世界展開できる多言語漫画（40言語）", text: "翻訳・SNS・展示会にも対応。", tone: "violet" },
-              { icon: <Sparkles size={22} />, title: "MangaXに掲載できる（無料）", text: "個人・ギフト・企業PRとして利用可能。", tone: "pink" },
-            ].map((item, idx) => (
-              <div key={idx} className="story-strength-card" data-tone={item.tone}>
-                <div className="story-strength-icon" data-tone={item.tone}>{item.icon}</div>
-                <div className="story-strength-body">
-                  <div className="story-strength-title">{item.title}</div>
-                  <div className="story-strength-text">{item.text}</div>
+        <section className="story-section reveal" style={{ padding: 0, overflow: "hidden" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gap: 0,
+          }}>
+            {/* Producer Profile Card */}
+            <div style={{
+              position: "relative",
+              padding: "clamp(32px, 5vw, 56px) clamp(24px, 4vw, 48px)",
+              background: "linear-gradient(160deg, #0d0d1a 0%, #0a0a0f 50%, #110d08 100%)",
+              borderBottom: "1px solid rgba(198,166,103,0.15)",
+              overflow: "hidden",
+            }}>
+              {/* Decorative elements */}
+              <div style={{ position: "absolute", width: 300, height: 300, borderRadius: "50%", background: "rgba(198,166,103,0.08)", filter: "blur(80px)", top: "-20%", right: "5%", pointerEvents: "none" }} />
+              <div style={{ position: "absolute", width: 200, height: 200, borderRadius: "50%", background: "rgba(0,212,255,0.05)", filter: "blur(60px)", bottom: "0%", left: "10%", pointerEvents: "none" }} />
+
+              <div style={{ position: "relative", zIndex: 2 }}>
+                <div style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#C6A667", fontWeight: 700, marginBottom: "24px", textTransform: "uppercase" }}>
+                  Producer & Creative Director
+                </div>
+
+                <div style={{ display: "flex", gap: "clamp(20px, 4vw, 40px)", alignItems: "flex-start", flexWrap: "wrap" }}>
+                  {/* Avatar */}
+                  <div style={{
+                    width: "clamp(100px, 18vw, 140px)",
+                    height: "clamp(100px, 18vw, 140px)",
+                    borderRadius: "20px",
+                    background: "linear-gradient(135deg, #C6A667 0%, #8B7355 100%)",
+                    display: "grid",
+                    placeItems: "center",
+                    flexShrink: 0,
+                    boxShadow: "0 20px 50px rgba(198,166,103,0.2), 0 0 0 1px rgba(198,166,103,0.3)",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}>
+                    <span style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "clamp(42px, 8vw, 56px)",
+                      fontWeight: 700,
+                      color: "#0a0a0f",
+                      lineHeight: 1,
+                    }}>M</span>
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%)", pointerEvents: "none" }} />
+                  </div>
+
+                  {/* Bio */}
+                  <div style={{ flex: 1, minWidth: "240px" }}>
+                    <h2 style={{
+                      fontSize: "clamp(28px, 5vw, 40px)",
+                      fontWeight: 900,
+                      margin: "0 0 4px",
+                      fontFamily: "'Noto Serif JP', serif",
+                      color: "#f0eef8",
+                      lineHeight: 1.1,
+                    }}>
+                      まっすー
+                    </h2>
+                    <div style={{ fontSize: "14px", color: "#C6A667", marginBottom: "16px", fontWeight: 600 }}>
+                      FOMUS Global Inc. / MangaX Creator
+                    </div>
+                    <p style={{
+                      color: "#c8c8c8",
+                      fontSize: "15px",
+                      lineHeight: 1.9,
+                      margin: "0 0 20px",
+                      maxWidth: "520px",
+                    }}>
+                      漫画プロデューサー兼クリエイティブディレクター。<br />
+                      「伝えたい想いがあるなら、漫画にできる」をモットーに、<br />
+                      ヒアリングを通じてクライアントの物語を引き出し、<br />
+                      AI×プロ編集のハイブリッド制作で形にしている。
+                    </p>
+                    <p style={{
+                      color: "#999",
+                      fontSize: "14px",
+                      lineHeight: 1.8,
+                      margin: "0 0 24px",
+                      maxWidth: "520px",
+                    }}>
+                      これまで、個人の人生ストーリーから企業PR、海外向けプロモーションまで幅広く手がける。
+                      MangaXプラットフォームを運営し、日本発の漫画を40言語以上で世界に届けている。
+                    </p>
+
+                    {/* Social / Contact links */}
+                    <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                      <a
+                        href="https://x.com/masukei444"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex", alignItems: "center", gap: "8px",
+                          padding: "10px 18px", borderRadius: "10px",
+                          background: "rgba(255,255,255,0.06)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          color: "#e0e0e0", fontSize: "13px", fontWeight: 600,
+                          textDecoration: "none", transition: "background 0.2s, border-color 0.2s",
+                        }}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        @masukei444
+                      </a>
+                      <button
+                        onClick={() => window.open("mailto:contact@example.com?subject=Story-to-Comic お問い合わせ", "_self")}
+                        style={{
+                          display: "inline-flex", alignItems: "center", gap: "8px",
+                          padding: "10px 18px", borderRadius: "10px",
+                          background: "linear-gradient(135deg, rgba(198,166,103,0.15), rgba(198,166,103,0.08))",
+                          border: "1px solid rgba(198,166,103,0.3)",
+                          color: "#C6A667", fontSize: "13px", fontWeight: 600,
+                          cursor: "pointer", transition: "background 0.2s",
+                        }}
+                      >
+                        <Mail size={14} /> お問い合わせ
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Strengths row below */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: 0,
+            }}>
+              {[
+                { icon: <MessageCircle size={20} />, title: "引き出すヒアリング", text: "話すだけで構成ができる", color: "#C6A667" },
+                { icon: <Wand2 size={20} />, title: "AI × プロ編集", text: "速い・高品質・安定", color: "#00d4ff" },
+                { icon: <Globe size={20} />, title: "40言語で世界展開", text: "翻訳・SNS・展示会対応", color: "#a78bfa" },
+                { icon: <Sparkles size={20} />, title: "MangaX掲載無料", text: "個人・ギフト・企業PR", color: "#f472b6" },
+              ].map((item, idx) => (
+                <div key={idx} style={{
+                  padding: "20px 24px",
+                  background: "rgba(255,255,255,0.02)",
+                  borderRight: idx < 3 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                  borderTop: "1px solid rgba(255,255,255,0.05)",
+                  display: "flex", alignItems: "center", gap: "14px",
+                  transition: "background 0.2s",
+                  cursor: "default",
+                }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+                  onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.02)"}
+                >
+                  <div style={{
+                    width: "40px", height: "40px", borderRadius: "10px",
+                    background: `${item.color}15`,
+                    border: `1px solid ${item.color}30`,
+                    display: "grid", placeItems: "center",
+                    color: item.color, flexShrink: 0,
+                  }}>{item.icon}</div>
+                  <div>
+                    <div style={{ fontSize: "14px", fontWeight: 700, color: "#f0eef8" }}>{item.title}</div>
+                    <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>{item.text}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -3210,7 +3123,13 @@ const ContinueCard = ({ historyItem, series, onClick }) => (
 const DetailModal = ({ series, chapters, isOpen, onClose, onRead, t }) => {
   if (!isOpen || !series) return null;
   const [activeTab, setActiveTab] = useState("episodes");
+  const [bookmarked, setBookmarked] = useState(() => isBookmarked(series.id));
   const firstChapter = chapters.find((c) => c.status === "published");
+
+  const handleBookmark = () => {
+    toggleBookshelf(series.id);
+    setBookmarked(!bookmarked);
+  };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -3225,7 +3144,12 @@ const DetailModal = ({ series, chapters, isOpen, onClose, onRead, t }) => {
             <h1 className="jump-title">{series.title}</h1>
             <p className="jump-author">{series.author}</p>
             <p className="jump-description">{series.description}</p>
-            {firstChapter && <button onClick={() => onRead(firstChapter)} className="jump-read-btn"><Play size={24} /> {t.read_first}</button>}
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              {firstChapter && <button onClick={() => onRead(firstChapter)} className="jump-read-btn"><Play size={24} /> {t.read_first}</button>}
+              <button onClick={handleBookmark} className="jump-read-btn" style={{ background: bookmarked ? "#e50914" : "rgba(255,255,255,0.12)" }}>
+                <Bookmark size={20} fill={bookmarked ? "#fff" : "none"} /> {bookmarked ? t.bookshelf_added : t.bookshelf_add}
+              </button>
+            </div>
             {series.id === "kuku" && (
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent("mx_navigate", { detail: { view: "kukuSponsor" } }))}
@@ -3630,7 +3554,8 @@ export default function App() {
         </div>
       )}
 
-      {view === "install" && <InstallPage />}
+      {view === "bookshelf" && <BookshelfPage db={db} t={t} onOpenSeries={openSeries} />}
+      {view === "ranking" && <RankingPage db={db} t={t} onOpenReader={openReader} />}
       {view === "flow" && <StoryLanding onBack={() => navigate("home")} />}
       {view === "kukuSponsor" && <KukuSponsorPage onBack={() => navigate("home")} />}
 
