@@ -1512,6 +1512,22 @@ const DEFAULT_DB = {
       match: 98,
     },
     {
+      id: "shimizu-promo",
+      title: "志水直樹 プロモ漫画",
+      author: "志水直樹",
+      coverUrl: "/manga/shimizu-promo/ch1/1.jpg",
+      heroUrl: "/manga/shimizu-promo/ch1/1.jpg",
+      description: "",
+      totalLikes: 0,
+      isNew: true,
+      status: "published",
+      direction: "rtl",
+      language: "ja",
+      tags: ["Promo", "Business"],
+      match: 99,
+      oneShot: true,
+    },
+    {
       id: "fomus",
       title: "FOMUS",
       author: "FOMUS Studio",
@@ -1532,6 +1548,7 @@ const DEFAULT_DB = {
     },
   ],
   chapters: [
+    { id: "sp1", seriesId: "shimizu-promo", number: 1, title: "1話", publishDate: "2026/04/09", likes: 0, status: "published", thumbUrl: "/manga/shimizu-promo/ch1/1.jpg", pageCount: 32 },
     { id: "c1", seriesId: "kuku", number: 1, title: "1話", publishDate: "2025/11/01", likes: 1200, status: "published", thumbUrl: "/assets/kuku-ep1.jpg", pageCount: 21 },
     { id: "c2", seriesId: "kuku", number: 2, title: "2話", publishDate: "2025/11/08", likes: 980, status: "published", thumbUrl: "/assets/kuku-ep2.jpg", pageCount: 22 },
     { id: "c3", seriesId: "kuku", number: 3, title: "3話", publishDate: "2025/11/15", likes: 720, status: "published", thumbUrl: "/assets/kuku-ep3.jpg", pageCount: 22 },
@@ -3619,6 +3636,7 @@ export default function App() {
               title={t.section_new}
               items={db.chapters
                 .filter((c) => c.status === "published")
+                .filter((c) => c.seriesId !== "kuku" || c.number <= 3)
                 .map((c) => ({ ...c, series: db.series.find((s) => s.id === c.seriesId) }))
                 .filter((c) => c.series)}
               renderItem={(ep) => (
