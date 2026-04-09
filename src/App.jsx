@@ -1513,7 +1513,7 @@ const DEFAULT_DB = {
     },
     {
       id: "shimizu-promo",
-      title: "志水直樹 プロモ漫画",
+      title: "GPSランナー志水直樹",
       author: "志水直樹",
       coverUrl: "/manga/shimizu-promo/ch1/1.jpg",
       heroUrl: "/manga/shimizu-promo/ch1/1.jpg",
