@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/manga/shimizu-promo", "destination": "/manga/gpsrun", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
