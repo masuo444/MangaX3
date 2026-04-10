@@ -1856,7 +1856,13 @@ const useAppNavigation = (initialView = "flow") => {
   const closeDetail = () => setSelectedSeries(null);
 
   const openReader = (chapter, series) => {
-    window.history.pushState({ read: chapter.id }, "");
+    const slug = series.slug || series.id;
+    const newPath = `/manga/${slug}`;
+    if (window.location.pathname !== newPath) {
+      window.history.pushState({ read: chapter.id, seriesId: series.id }, "", newPath);
+    } else {
+      window.history.pushState({ read: chapter.id, seriesId: series.id }, "");
+    }
     setReadingChapter({ chapter, series });
   };
 
@@ -3343,6 +3349,20 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
   const [preloaded, setPreloaded] = useState(false);
   const [loadedCount, setLoadedCount] = useState(0);
   const [showLangPicker, setShowLangPicker] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
+
+  const handleReaderShare = async (e) => {
+    e.stopPropagation();
+    const slug = series.slug || series.id;
+    const url = `${window.location.origin}/manga/${slug}`;
+    const shareData = { title: series.title, text: series.title, url };
+    if (navigator.share && navigator.canShare?.(shareData)) {
+      try { await navigator.share(shareData); return; } catch {}
+    }
+    await navigator.clipboard.writeText(url).catch(() => {});
+    setShareCopied(true);
+    setTimeout(() => setShareCopied(false), 2000);
+  };
 
   const pageCount = chapter.pageCount || 20;
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
@@ -3444,6 +3464,12 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
         </button>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <span style={{ fontSize: 13, color: "#aaa" }}>{currentPage}/{pageCount}</span>
+          <button
+            onClick={handleReaderShare}
+            style={{ background: shareCopied ? "rgba(74,222,128,0.25)" : "rgba(255,255,255,0.12)", border: "none", borderRadius: 8, color: shareCopied ? "#4ade80" : "white", display: "flex", alignItems: "center", gap: 4, padding: "6px 10px", cursor: "pointer", fontSize: 13, fontWeight: 600 }}
+          >
+            {shareCopied ? <Check size={16} /> : <Share2 size={16} />}
+          </button>
         </div>
       </div>
 
