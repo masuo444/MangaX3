@@ -3651,14 +3651,15 @@ export default function App() {
 
   useEffect(() => {
     const BASE = "https://mangax.fomusglobal.com";
-    if (selectedSeries) {
-      const img = `${BASE}${selectedSeries.heroUrl || selectedSeries.coverUrl}`;
-      const desc = selectedSeries.description || selectedSeries.description_en || `${selectedSeries.title} — MangaX`;
+    const activeSeries = selectedSeries || readingChapter?.series;
+    if (activeSeries) {
+      const img = `${BASE}${activeSeries.heroUrl || activeSeries.coverUrl}`;
+      const desc = activeSeries.description || activeSeries.description_en || `${activeSeries.title} — MangaX`;
       updateOGP({
-        title: `${selectedSeries.title} | MangaX`,
+        title: `${activeSeries.title} | MangaX`,
         description: desc,
         image: img,
-        url: `${BASE}/manga/${selectedSeries.slug || selectedSeries.id}`,
+        url: `${BASE}/manga/${activeSeries.slug || activeSeries.id}`,
       });
     } else {
       updateOGP({
@@ -3671,18 +3672,18 @@ export default function App() {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [selectedSeries]);
+  }, [selectedSeries, readingChapter]);
 
   // slug OR id でシリーズを検索するヘルパー
   const findSeriesBySlug = (slugOrId) =>
     db.series.find((s) => (s.slug || s.id) === slugOrId || s.id === slugOrId);
 
-  // 直リンク（/manga/:slug）でアクセスした場合にdetailを開く
+  // 直リンク（/manga/:slug）でアクセスした場合に即座に開く
   useEffect(() => {
     const slugOrId = seriesIdFromPath(window.location.pathname);
     if (slugOrId) {
       const series = findSeriesBySlug(slugOrId);
-      if (series) openDetail(series);
+      if (series) openSeries(series); // oneShot → Reader直行、通常 → DetailModal
     }
     // popstateでのdetail復元
     const handleRestoreDetail = (e) => {
