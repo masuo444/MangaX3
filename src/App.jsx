@@ -3228,11 +3228,24 @@ const DetailModal = ({ series, chapters, isOpen, onClose, onRead, t }) => {
   if (!isOpen || !series) return null;
   const [activeTab, setActiveTab] = useState("episodes");
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(series.id));
+  const [copied, setCopied] = useState(false);
   const firstChapter = chapters.find((c) => c.status === "published");
 
   const handleBookmark = () => {
     toggleBookshelf(series.id);
     setBookmarked(!bookmarked);
+  };
+
+  const handleShare = async () => {
+    const slug = series.slug || series.id;
+    const url = `${window.location.origin}/manga/${slug}`;
+    const shareData = { title: series.title, text: series.description || series.title, url };
+    if (navigator.share && navigator.canShare?.(shareData)) {
+      try { await navigator.share(shareData); return; } catch {}
+    }
+    await navigator.clipboard.writeText(url).catch(() => {});
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -3242,6 +3255,9 @@ const DetailModal = ({ series, chapters, isOpen, onClose, onRead, t }) => {
           <header className="jump-header">
             <button onClick={onClose} className="jump-back-btn"><ChevronLeft size={28} /></button>
             <div className="jump-header-title"></div>
+            <button onClick={handleShare} className="jump-back-btn" style={{ marginLeft: "auto" }} title={t.share}>
+              {copied ? <Check size={22} style={{ color: "#4ade80" }} /> : <Share2 size={22} />}
+            </button>
           </header>
           <div className="jump-hero"><img src={series.heroUrl || series.coverUrl} /><div className="jump-hero-gradient"></div></div>
           <div className="jump-info">
@@ -3252,6 +3268,9 @@ const DetailModal = ({ series, chapters, isOpen, onClose, onRead, t }) => {
               {firstChapter && <button onClick={() => onRead(firstChapter)} className="jump-read-btn"><Play size={24} /> {t.read_first}</button>}
               <button onClick={handleBookmark} className="jump-read-btn" style={{ background: bookmarked ? "#e50914" : "rgba(255,255,255,0.12)" }}>
                 <Bookmark size={20} fill={bookmarked ? "#fff" : "none"} /> {bookmarked ? t.bookshelf_added : t.bookshelf_add}
+              </button>
+              <button onClick={handleShare} className="jump-read-btn" style={{ background: copied ? "rgba(74,222,128,0.2)" : "rgba(255,255,255,0.10)", color: copied ? "#4ade80" : "#fff" }}>
+                {copied ? <><Check size={18} /> コピー済み</> : <><Share2 size={18} /> {t.share}</>}
               </button>
             </div>
             {series.id === "kuku" && (
