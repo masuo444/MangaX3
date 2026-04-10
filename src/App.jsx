@@ -1513,6 +1513,7 @@ const DEFAULT_DB = {
     },
     {
       id: "shimizu-promo",
+      slug: "gpsrun",
       title: "GPSランナー志水直樹",
       author: "志水直樹",
       coverUrl: "/manga/shimizu-promo/ch1/1.jpg",
@@ -1766,7 +1767,14 @@ const pathToView = (path) => {
   if (path.startsWith("/bookshelf")) return "bookshelf";
   if (path.startsWith("/ranking")) return "ranking";
   if (path.startsWith("/partners")) return "kukuSponsor";
+  if (path.startsWith("/manga/")) return "home";
   return "home";
+};
+
+const seriesIdFromPath = (path) => {
+  if (!path) return null;
+  const m = path.match(/^\/manga\/([^/]+)/);
+  return m ? m[1] : null;
 };
 
 // --- Scroll reveal hook ---
@@ -1797,10 +1805,17 @@ const useAppNavigation = (initialView = "flow") => {
   const [readingChapter, setReadingChapter] = useState(null);
 
   useEffect(() => {
-    const handlePopState = () => {
+    const handlePopState = (e) => {
       setReadingChapter(null);
-      setSelectedSeries(null);
-      const nextView = pathToView(window.location.pathname);
+      const path = window.location.pathname;
+      const nextView = pathToView(path);
+      // /manga/:id のURLに戻った場合はdetailIdをstateに保持（Appで復元）
+      const detailId = e.state?.detail || seriesIdFromPath(path);
+      if (detailId) {
+        window.dispatchEvent(new CustomEvent("mx_restore_detail", { detail: { id: detailId } }));
+      } else {
+        setSelectedSeries(null);
+      }
       setView(nextView);
       setHistoryStack((stack) => [...stack, nextView]);
     };
@@ -1830,7 +1845,11 @@ const useAppNavigation = (initialView = "flow") => {
   };
 
   const openDetail = (series) => {
-    window.history.pushState({ detail: series.id }, "");
+    const slug = series.slug || series.id;
+    const newPath = `/manga/${slug}`;
+    if (window.location.pathname !== newPath) {
+      window.history.pushState({ detail: series.id }, "", newPath);
+    }
     setSelectedSeries(series);
   };
 
@@ -3571,12 +3590,66 @@ export default function App() {
   const LANG_LABELS = { ja: "JP", en: "EN", fr: "FR", ar: "AR" };
   const toggleLang = () => setLang((l) => LANG_ORDER[(LANG_ORDER.indexOf(l) + 1) % LANG_ORDER.length]);
 
+  // OGPメタタグ更新
+  const updateOGP = ({ title, description, image, url }) => {
+    document.title = title;
+    const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.setAttribute("content", val); };
+    set('meta[name="description"]', description);
+    set('meta[property="og:title"]', title);
+    set('meta[property="og:description"]', description);
+    set('meta[property="og:image"]', image);
+    set('meta[property="og:url"]', url);
+    set('meta[name="twitter:title"]', title);
+    set('meta[name="twitter:description"]', description);
+    set('meta[name="twitter:image"]', image);
+  };
+
   useEffect(() => {
-    document.title = selectedSeries ? `MangaX - ${selectedSeries.title}` : "MangaX - The Cross-Border Manga Platform";
+    const BASE = "https://mangax.fomusglobal.com";
+    if (selectedSeries) {
+      const img = `${BASE}${selectedSeries.heroUrl || selectedSeries.coverUrl}`;
+      const desc = selectedSeries.description || selectedSeries.description_en || `${selectedSeries.title} — MangaX`;
+      updateOGP({
+        title: `${selectedSeries.title} | MangaX`,
+        description: desc,
+        image: img,
+        url: `${BASE}/manga/${selectedSeries.slug || selectedSeries.id}`,
+      });
+    } else {
+      updateOGP({
+        title: "MangaX | クロスボーダー漫画プラットフォーム",
+        description: "MangaXは越境漫画のためのプラットフォームです。新作配信と制作フローをまとめて体験できます。",
+        image: `${BASE}/assets/kuku-hero.jpg`,
+        url: `${BASE}/`,
+      });
+    }
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [selectedSeries]);
+
+  // slug OR id でシリーズを検索するヘルパー
+  const findSeriesBySlug = (slugOrId) =>
+    db.series.find((s) => (s.slug || s.id) === slugOrId || s.id === slugOrId);
+
+  // 直リンク（/manga/:slug）でアクセスした場合にdetailを開く
+  useEffect(() => {
+    const slugOrId = seriesIdFromPath(window.location.pathname);
+    if (slugOrId) {
+      const series = findSeriesBySlug(slugOrId);
+      if (series) openDetail(series);
+    }
+    // popstateでのdetail復元
+    const handleRestoreDetail = (e) => {
+      const series = findSeriesBySlug(e.detail?.id) || db.series.find((s) => s.id === e.detail?.id);
+      if (series) {
+        // pushState不要（すでにURLは正しい）
+        openDetail(series);
+      }
+    };
+    window.addEventListener("mx_restore_detail", handleRestoreDetail);
+    return () => window.removeEventListener("mx_restore_detail", handleRestoreDetail);
+  }, [db]);
 
   if (readingChapter) {
     const chaptersForSeries = db.chapters
