@@ -3259,11 +3259,22 @@ const DetailModal = ({ series, chapters, isOpen, onClose, onRead, t }) => {
   const handleShare = async () => {
     const slug = series.slug || series.id;
     const url = `${window.location.origin}/manga/${slug}`;
-    const shareData = { title: series.title, text: series.description || series.title, url };
-    if (navigator.share && navigator.canShare?.(shareData)) {
-      try { await navigator.share(shareData); return; } catch {}
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: series.title, text: series.description || series.title, url });
+        return;
+      } catch (err) {
+        if (err.name === "AbortError") return; // ユーザーがキャンセル
+      }
     }
-    await navigator.clipboard.writeText(url).catch(() => {});
+    // クリップボードコピー（PCフォールバック）
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const el = document.createElement("textarea");
+      el.value = url; document.body.appendChild(el); el.select();
+      document.execCommand("copy"); document.body.removeChild(el);
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -3369,11 +3380,21 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
     e.stopPropagation();
     const slug = series.slug || series.id;
     const url = `${window.location.origin}/manga/${slug}`;
-    const shareData = { title: series.title, text: series.title, url };
-    if (navigator.share && navigator.canShare?.(shareData)) {
-      try { await navigator.share(shareData); return; } catch {}
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: series.title, text: series.title, url });
+        return;
+      } catch (err) {
+        if (err.name === "AbortError") return;
+      }
     }
-    await navigator.clipboard.writeText(url).catch(() => {});
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const el = document.createElement("textarea");
+      el.value = url; document.body.appendChild(el); el.select();
+      document.execCommand("copy"); document.body.removeChild(el);
+    }
     setShareCopied(true);
     setTimeout(() => setShareCopied(false), 2000);
   };
