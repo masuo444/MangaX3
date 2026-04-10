@@ -1796,13 +1796,27 @@ const useScrollReveal = () => {
   }, []);
 };
 
+// --- URL から初期状態を同期的に解決 ---
+const resolveInitialStateFromURL = () => {
+  const path = typeof window !== "undefined" ? window.location.pathname : "";
+  const slugOrId = seriesIdFromPath(path);
+  if (!slugOrId) return { selectedSeries: null, readingChapter: null };
+  const series = DEFAULT_DB.series.find((s) => (s.slug || s.id) === slugOrId || s.id === slugOrId);
+  if (!series) return { selectedSeries: null, readingChapter: null };
+  if (series.oneShot) {
+    const chapter = DEFAULT_DB.chapters.find((c) => c.seriesId === series.id && c.number === 1);
+    if (chapter) return { selectedSeries: null, readingChapter: { chapter, series } };
+  }
+  return { selectedSeries: series, readingChapter: null };
+};
+
 // --- Hooks & helpers ---
 const useAppNavigation = (initialView = "flow") => {
   const resolvedInitialView = pathToView(typeof window !== "undefined" ? window.location.pathname : "") || initialView;
   const [view, setView] = useState(resolvedInitialView);
   const [historyStack, setHistoryStack] = useState([resolvedInitialView]);
-  const [selectedSeries, setSelectedSeries] = useState(null);
-  const [readingChapter, setReadingChapter] = useState(null);
+  const [selectedSeries, setSelectedSeries] = useState(() => resolveInitialStateFromURL().selectedSeries);
+  const [readingChapter, setReadingChapter] = useState(() => resolveInitialStateFromURL().readingChapter);
 
   useEffect(() => {
     const handlePopState = (e) => {
@@ -3678,20 +3692,11 @@ export default function App() {
   const findSeriesBySlug = (slugOrId) =>
     db.series.find((s) => (s.slug || s.id) === slugOrId || s.id === slugOrId);
 
-  // 直リンク（/manga/:slug）でアクセスした場合に即座に開く
+  // popstateでのdetail復元（ブラウザバック後に /manga/:id へ進んだ場合）
   useEffect(() => {
-    const slugOrId = seriesIdFromPath(window.location.pathname);
-    if (slugOrId) {
-      const series = findSeriesBySlug(slugOrId);
-      if (series) openSeries(series); // oneShot → Reader直行、通常 → DetailModal
-    }
-    // popstateでのdetail復元
     const handleRestoreDetail = (e) => {
       const series = findSeriesBySlug(e.detail?.id) || db.series.find((s) => s.id === e.detail?.id);
-      if (series) {
-        // pushState不要（すでにURLは正しい）
-        openDetail(series);
-      }
+      if (series) openSeries(series);
     };
     window.addEventListener("mx_restore_detail", handleRestoreDetail);
     return () => window.removeEventListener("mx_restore_detail", handleRestoreDetail);
