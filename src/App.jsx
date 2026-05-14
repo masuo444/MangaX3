@@ -3515,7 +3515,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
       </div>
 
       {/* Language toggle (floating) */}
-      {translationAvailable && showUI && (
+      {availableLangCodes.length > 0 && showUI && (
         <div style={{ position: "fixed", top: 60, right: 12, zIndex: 215 }}>
           <button
             onClick={(e) => { e.stopPropagation(); setShowLangPicker(!showLangPicker); }}
