@@ -3419,7 +3419,9 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
     const probe = async (code, ext) => {
       try {
         const res = await fetch(`/manga/${series.id}/ch${chapter.number}/1_${code}.${ext}`, { method: "HEAD" });
-        return res.ok;
+        if (!res.ok) return false;
+        // Vercel rewrites all 404s to index.html (200 + text/html) — must confirm it's an image
+        return (res.headers.get("content-type") || "").startsWith("image/");
       } catch { return false; }
     };
     const checkTranslations = async () => {
