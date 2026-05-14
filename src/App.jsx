@@ -3364,8 +3364,7 @@ const READER_UI = {
 
 const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
   const [showUI, setShowUI] = useState(true);
-  const [translations, setTranslations] = useState({});
-  const [translationAvailable, setTranslationAvailable] = useState(false);
+  const [availableLangCodes, setAvailableLangCodes] = useState([]);
   const [selectedLang, setSelectedLang] = useState("off");
   const [currentPage, setCurrentPage] = useState(1);
   const [reachedEnd, setReachedEnd] = useState(false);
@@ -3406,8 +3405,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
   // Reset on chapter change
   useEffect(() => {
     setCurrentPage(1);
-    setTranslations({});
-    setTranslationAvailable(false);
+    setAvailableLangCodes([]);
     setPreloaded(false);
     setLoadedCount(0);
     setReachedEnd(false);
@@ -3415,18 +3413,24 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
     if (readerRef.current) readerRef.current.scrollTop = 0;
   }, [chapter.id]);
 
-  // Check if translated images exist (probe first page)
+  // Probe which translated languages are available for this chapter
   useEffect(() => {
     let cancelled = false;
-    const checkTranslation = async () => {
+    const probe = async (code, ext) => {
       try {
-        const res = await fetch(`/manga/${series.id}/ch${chapter.number}/1_en.png`, { method: "HEAD" });
-        if (!cancelled && res.ok) {
-          setTranslationAvailable(true);
-        }
-      } catch {}
+        const res = await fetch(`/manga/${series.id}/ch${chapter.number}/1_${code}.${ext}`, { method: "HEAD" });
+        return res.ok;
+      } catch { return false; }
     };
-    checkTranslation();
+    const checkTranslations = async () => {
+      const langCodes = READER_LANGS.filter((l) => l.code !== "off").map((l) => l.code);
+      const found = [];
+      await Promise.all(langCodes.map(async (code) => {
+        if ((await probe(code, "png")) || (await probe(code, "jpg"))) found.push(code);
+      }));
+      if (!cancelled) setAvailableLangCodes(found);
+    };
+    checkTranslations();
     return () => { cancelled = true; };
   }, [chapter.id, series.id, chapter.number]);
 
@@ -3486,7 +3490,7 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
   }, [currentPage, pageCount]);
 
   const availableLangs = READER_LANGS.filter(
-    (l) => l.code === "off" || (translationAvailable && l.code === "en")
+    (l) => l.code === "off" || availableLangCodes.includes(l.code)
   );
 
   return (
@@ -3579,11 +3583,15 @@ const Reader = ({ chapter, series, onClose, nextChapter, onNextChapter }) => {
                 loading={p <= FAST_PRELOAD ? "eager" : "lazy"}
                 decoding="async"
                 onError={(e) => {
-                  // Fallback chain: _en.png → original .png → .jpg → placeholder
-                  if (useLangImg && !e.target.dataset.fallback) {
+                  const fb = e.target.dataset.fallback;
+                  if (useLangImg && !fb) {
+                    // Try JPG version of the translated image
+                    e.target.dataset.fallback = "langjpg";
+                    e.target.src = `${basePath}/${p}_${selectedLang}.jpg`;
+                  } else if (useLangImg && fb === "langjpg") {
                     e.target.dataset.fallback = "original";
                     e.target.src = `${basePath}/${p}.png`;
-                  } else if (e.target.dataset.fallback !== "jpg") {
+                  } else if (fb !== "jpg") {
                     e.target.dataset.fallback = "jpg";
                     e.target.src = `${basePath}/${p}.jpg`;
                   } else {
